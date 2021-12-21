@@ -3,14 +3,14 @@ import os
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import  LoginManager
+from flask_login import LoginManager
 
 DATABASE = '/'
 DEBUG = True
 SECRET_KEY = 'CAJhjasklGUgklA<4%^g,b.jgvnb'
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite3:///nkedb.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sql:///nkedb.db'
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -25,13 +25,23 @@ class Users(db.Model):
 
 
 @app.route('/')
-def index():  # put application's code here
-    return 'Hello World!'
+def Login():  # put application's code here
+    return 'Страница входа'
 
 
-@app.route('/about')
-def about():
-    return 'About'
+@app.route('/main')
+def Main():
+    return 'Основная страница'
+
+
+@app.route('/schedule')
+def Schedule():
+    return 'Расписание'
+
+
+@app.route('/teachers')
+def Teachers():
+    return 'Учителя'
 
 
 if __name__ == '__main__':
