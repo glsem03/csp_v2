@@ -32,6 +32,11 @@ h6 {
     font-size: inherit;
 }
 
+input {
+    border: none;
+    outline: none;
+}
+
 html,
 body {
     font-family: 'Roboto', sans-serif;
@@ -118,6 +123,7 @@ body {
 }
 
 .data_field {
+    padding: 0 15px;
     width: 328px;
     height: 47px;
     font-size: 18px;
