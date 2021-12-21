@@ -1,19 +1,18 @@
 from flask import Flask
-import os
-import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import LoginManager
+import pymysql
 
-DATABASE = '/'
+DATABASE = '/nkedb.sql'
 DEBUG = True
 SECRET_KEY = 'CAJhjasklGUgklA<4%^g,b.jgvnb'
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sql:///nkedb.db'
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass@localhost/nkedb.sql'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
+
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
