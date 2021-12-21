@@ -94,7 +94,7 @@ body {
 .authorization_block {
     margin: 50px auto 0;
     max-width: 436px;
-    min-width: 320px;
+    min-width: auto;
     height: 596px;
 }
 
@@ -106,7 +106,7 @@ body {
 
 .authorization {
     max-width: 436px;
-    min-width: 320px;
+    min-width: auto;
     height: 442px;
     background: black;
     border: 5px solid white;
@@ -117,14 +117,14 @@ body {
 
 .data {
     max-width: 328px;
-    min-width: 192px;
+    min-width: auto;
     height: 75px;
     margin: 0 auto;
 }
 
 .data-b {
     max-width: 328px;
-    min-width: 192px;
+    min-width: auto;
     height: 98px;
     margin: 44px auto;
 }
@@ -147,7 +147,15 @@ body {
 .data_field {
     padding: 0 15px;
     max-width: 328px;
-    min-width: 10px;
+    min-width: auto;
+    height: 46px;
+    font-size: 18px;
+    background: white;
+}
+
+.data_field_block {
+    max-width: 328px;
+    min-width: auto;
     height: 47px;
     font-size: 18px;
     background: white;
