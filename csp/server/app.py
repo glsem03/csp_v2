@@ -3,14 +3,14 @@ import os
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import  LoginManager
+from flask_login import LoginManager
 
 DATABASE = '/'
 DEBUG = True
 SECRET_KEY = 'CAJhjasklGUgklA<4%^g,b.jgvnb'
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite3:///nkedb.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sql:///nkedb.db'
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
