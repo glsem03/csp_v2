@@ -74,7 +74,7 @@ body {
 
 /* Авторизация */
 .authorization_block {
-    margin: 0 auto;
+    margin: 100px auto 0;
     width: 436px;
     height: 596px;
 }
