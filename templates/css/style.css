@@ -1,0 +1,147 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul,
+ol,
+li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+html,
+body {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    line-height: 1;
+    font-size: 16px;
+    color: #000;
+    background: black;
+}
+
+.wrapper {
+    min-height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1680px;
+    margin: 0px auto;
+}
+
+
+
+/* Шапка */
+.header_logo_aut {
+    background: url(../img/logo.svg) no-repeat;
+    width: 109px;
+    height: 109px;
+    margin: 0 auto;
+}
+
+.header {
+    height: 120px;
+}
+
+
+/* Авторизация */
+.authorization_block {
+    margin: 0 auto;
+    width: 436px;
+    height: 596px;
+}
+
+.welcome_txt {
+    color: white;
+    font-size: 24px;
+    text-align: center
+}
+
+.authorization {
+    width: 436px;
+    height: 442px;
+    background: black;
+    border: 5px solid white;
+    border-radius: 15px;
+    margin-top: 100px;
+    padding: 57px 49px;
+}
+
+.data {
+    width: 328px;
+    height: 75px;
+    margin: 0 auto;
+}
+
+.data-b {
+    width: 328px;
+    height: 98px;
+    margin: 44px auto;
+}
+
+.enter_data {
+    margin-bottom: 7px;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+.enter_data-b {
+    margin-top: 28px;
+    margin-bottom: 7px;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+.data_field {
+    width: 328px;
+    height: 47px;
+    font-size: 18px;
+}
+
+.forgot_password {
+    color: white;
+    font-size: 14px;
+    margin-top: 7px;
+}
+
+.enter_btn {
+    padding: 13px 0;
+    font-size: 18px;
+    text-align: center;
+    margin: 0 auto;
+    width: 211px;
+    height: 45px;
+    background: white;
+    border-radius: 50px;
+    transition: 0.5s;
+}
+
+.enter_btn:hover {
+    color: white;
+    background: black;
+}
