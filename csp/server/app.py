@@ -25,13 +25,23 @@ class Users(db.Model):
 
 
 @app.route('/')
-def index():  # put application's code here
-    return 'Hello World!'
+def Login():  # put application's code here
+    return 'Страница входа'
 
 
-@app.route('/about')
-def about():
-    return 'About'
+@app.route('/main')
+def Main():
+    return 'Основная страница'
+
+
+@app.route('/schedule')
+def Schedule():
+    return 'Расписание'
+
+
+@app.route('/teachers')
+def Teachers():
+    return 'Учителя'
 
 
 if __name__ == '__main__':
