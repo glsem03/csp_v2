@@ -3,7 +3,7 @@ import os
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import  LoginManager
+from flask_login import LoginManager
 
 DATABASE = '/'
 DEBUG = True
@@ -25,13 +25,23 @@ class Users(db.Model):
 
 
 @app.route('/')
-def index():  # put application's code here
-    return 'Hello World!'
+def Login():  # put application's code here
+    return 'Страница входа'
 
 
-@app.route('/about')
-def about():
-    return 'About'
+@app.route('/main')
+def Main():
+    return 'Основная страница'
+
+
+@app.route('/schedule')
+def Schedule():
+    return 'Расписание'
+
+
+@app.route('/teachers')
+def Teachers():
+    return 'Учителя'
 
 
 if __name__ == '__main__':
