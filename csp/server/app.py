@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import LoginManager
@@ -24,7 +24,7 @@ class User(db.Model):
         return '<Users %r' % self.id
 
 
-class LoginForm:
+class LoginForm(db.Model):
     validate_on_submit = db.Column(db.String(20), nullable=False)
     username = db.Column(db.String(15), primary_key=True, nullable=False)
     password = db.Column(db.String(500), nullable=True)
@@ -36,9 +36,22 @@ def load_user(user_id):
     return User.get(user_id)
 
 
-@app.route('/s-u')
+@app.route('/s-u', methods=['POST', 'GET'])
 def Sign_up():
-    return render_template('base.html')
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+
+        login_form = LoginForm(username=str(username), password=str(password))
+
+        try:
+            db.session.add(login_form)
+            db.session.commit()
+            return redirect('/main')
+        except:
+            return "Что-то сделанно не правильно"
+    else:
+        return render_template('authorization.html')
 
 
 @app.route('/')
@@ -48,7 +61,7 @@ def Login():  # put application's code here
 
 @app.route('/main')
 def Main():
-    return 'Основная страница'
+    return render_template('index.html')
 
 
 @app.route('/schedule')
