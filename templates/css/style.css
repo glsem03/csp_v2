@@ -56,7 +56,7 @@ body {
 .container {
     box-sizing: content-box;
     padding: 0 15px;
-    max-width: 1710px;
+    max-width: 1680px;
     margin: 0px auto;
 }
 
@@ -104,10 +104,14 @@ body {
 }
 
 .header_container {
-    padding: 15px 15px;
+    padding: 0 15px;
     display: flex;
-    min-height: 120px;
+    height: 120px;
     align-items: center;
+}
+
+.header_container_aut {
+    height: 120px;
 }
 
 .nav_menu {
@@ -152,6 +156,12 @@ body {
 @media (max-width: 806px){
     .nav_list {
         max-width: 325px;
+    }
+    .header_container {
+        padding: 15px 15px;
+    }
+    .header_container_aut {
+        padding: 15px 15px;
     }
 }
 
@@ -205,7 +215,7 @@ body {
 
 /* Авторизация */
 .authorization_block {
-    margin: 50px auto 0;
+    margin: 0 auto;
     max-width: 436px;
     min-width: auto;
     height: 596px;
@@ -258,10 +268,10 @@ body {
 }
 
 .data_field {
-    padding: 0 15px;
+    padding: 0 0 0 15px;
     max-width: 328px;
     min-width: auto;
-    height: 46px;
+    height: 47px;
     font-size: 18px;
     background: white;
 }
@@ -281,7 +291,7 @@ body {
 }
 
 .enter_btn {
-    padding: 13px 0;
+    padding: 9px 0;
     font-size: 18px;
     text-align: center;
     margin: 0 auto;
@@ -488,9 +498,7 @@ body {
     margin: 0 1px 1px 0;
 }
 
-.item-time {
-    
-}
+
 
 .timetable_class {
     background: black;
@@ -548,7 +556,81 @@ body {
     }
 }
 
+.time {
+    text-align: center;
+}
 
+.timetable {
+    background: white;
+    width: 100%;
+    height: auto;
+    padding: 81px 0 0 0;
+}
+
+.timetable_list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.timetable_block {
+    width: 32.739%;
+    height: 338px;
+    margin-right: 15px;
+    margin-bottom: 81px;
+}
+
+.timetable_main {
+    background: black;
+    width: 100%;
+    height: 300px;
+}
+
+.timetable_block_last {
+    width: 32.739%;
+    height: 338px;
+}
+
+@media (max-width: 1712px){
+    .timetable_block_last {
+        margin-right: 15px;
+        width: 32.739%;
+    }
+    .timetable_block {
+        width: 32.739%;
+    }
+}
+
+@media (max-width: 1680px){
+    .timetable_block_last {
+        margin-right: 15px;
+        width: 45.833333%;
+    }
+    .timetable_block {
+        width: 45.833333%;
+    }
+}
+
+@media (max-width: 1200px){
+    .timetable_block_last {
+        width: 80%;
+        margin: 0 0 47px 0;
+    }
+    .timetable_block {
+        width: 80%;
+        margin: 0 0 47px 0;
+    }
+}
+
+@media (max-width: 767px){
+    .timetable_block_last {
+        width: 100%;
+    }
+    .timetable_block {
+        width: 100%;
+    }
+}
 
 /* Мейн */
 
