@@ -227,6 +227,14 @@ body {
     text-align: center
 }
 
+.wrong_password {
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+    display: none;
+}
+
 .authorization {
     max-width: 436px;
     min-width: auto;
