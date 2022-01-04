@@ -1,130 +1,168 @@
-import sqlite3
 import os
-from flask import Flask, render_template, request, redirect, url_for, session, g, abort
+from flask import Flask, render_template, request, redirect, url_for, g, abort, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, logout_user, login_user, login_required, UserMixin
+from sqlalchemy import ForeignKey
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # !config info!
 SECRET_KEY = 'so-so-so-so-so-difficult-key'
-DATABASE = '/csp/server/database.db'
+DATABASE = '/csp/server/nkedb.db'
 DEBUG = True
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nkedb.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'database.db')))
+app.config.update(dict(DATABASE=os.path.join(app.root_path, 'nkedb.db')))
 
 db = SQLAlchemy(app)
+
 login_manager = LoginManager(app)
 
 
-#  проверка соединения с бд
-def connect_db():
-    conn = sqlite3.connect(app.config['DATABASE'])
-    conn.row_factory = sqlite3.Row
-    return conn
+class UserTypes(db.Model):
+    __tablename__ = 'UserTypes'
+    RoleId = db.Column(db.Integer(), unique=True, primary_key=True)
+    RoleName = db.Column(db.Integer(), nullable=False)
 
 
-#  создание базы, если она отсутсвует
-def create_db():
-    db = connect_db()
-    with app.open_resource('sq_db.sql', mode='r') as f:
-        db.cursor().executescript(f.read())
-    db.commit()
-    db.close()
+class Users(db.Model, UserMixin):
+    __tablename__ = 'Users'
+    UserId = db.Column(db.Integer(), unique=True, nullable=False, primary_key=True)
+    UserLogin = db.Column(db.Text(), nullable=False)
+    UserPassword = db.Column(db.Text(), nullable=False)
+    UserTypeId = db.Column(db.Integer(), ForeignKey('UserTypes.RoleId'), nullable=False)
 
+    def is_active(self):
+        return True
 
-#  соединение с бд
-def get_db():
-     if not hasattr(g, 'link_db'):
-         g.link_db = connect_db()
+    def is_authenticated(self):
+        return True
 
-     return g.link_db
+    def is_anonymous(self):
+        return False
 
-
-#  разрыв соединения
-@app.teardown_appcontext
-def close_db(error):
-    if hasattr(g, 'link_db'):
-        g.link_db.close()
-
-
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    login = db.Column(db.String(50), nullable=False, primary_key=True)
-    password = db.Column(db.String(500), nullable=False)
-    role = db.Column(db.String(20), nullable=False, default='Anonim')
-
-    marks = db.Column(db.Integer, nullable=True)
+    def get_id(self):
+        return self.UserId
 
     def __repr__(self):
-        return '<Users %r' % self.id
+        return '<UserLogin %r>' % (self.UserLogin)
 
 
-class LoginForm(db.Model):
-    validate_on_submit = db.Column(db.String(20), nullable=True)
-    username = db.Column(db.String(15), primary_key=True, nullable=False)
-    password = db.Column(db.String(500), nullable=True)
-    remember_me = db.Column(db.String(5), nullable=True)
+class Groups(db.Model):
+    __tablename__ = 'Groups'
+    Id = db.Column(db.Integer(), nullable=False, unique=True, primary_key=True)
+    Name = db.Column(db.Text(), nullable=False)
+    ElderId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+    TeacherId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+
+
+class GroupsToUsers(db.Model):
+    __tablename__ = 'GroupsToUsers'
+    Id = db.Column(db.Integer(), nullable=False, unique=True, primary_key=True)
+    UserId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+    GroupId = db.Column(db.Integer(), ForeignKey('Groups.Id'), nullable=False)
+
+
+class HomeWorkList(db.Model):
+    __tablename__ = 'HomeWorkList'
+    Id = db.Column(db.Integer(), nullable=False, unique=True, primary_key=True)
+    LessonId = db.Column(db.Integer(), ForeignKey('Lessons.Id'), nullable=False)
+    HomeWorkDesc = db.Column(db.Text())
+
+
+class Lessons(db.Model):
+    __tablename__ = 'Lessons'
+    Id = db.Column(db.Integer, nullable=False, unique=True, primary_key=True)
+    LessonName = db.Column(db.Text(), nullable=False)
+
+
+class MarksList(db.Model):
+    __tablename__ = 'MarksList'
+    Id = db.Column(db.Integer(), nullable=False, unique=True, primary_key=True)
+    PupilId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+    TeacherId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+    Mark = db.Column(db.Integer(), nullable=False)
+    TeacherDesc = db.Column(db.Text())
+
+
+class MissedLessons(db.Model):
+    __tablename__ = 'MissedLessons'
+    Id = db.Column(db.Integer(), nullable=False, unique=True, primary_key=True)
+    UserId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+    SkippedLessonDateTime = db.Column(db.Text(), nullable=False)
+    SkippedAllDay = db.Column(db.Integer())
+    SkipReasonTypeId = db.Column(db.Integer(), nullable=False)
+    ElderDesc = db.Column(db.Text())
+
+
+class MissedLessonsReason(db.Model):
+    __tablename__ = 'MissedLessonsReason'
+    SkipReasonName = db.Column(db.Text(), nullable=False, primary_key=True)
+
+
+class ScheduleList(db.Model):
+    __tablename__ = 'ScheduleList'
+    Id = db.Column(db.Integer(), nullable=False, primary_key=True)
+    LessonId = db.Column(db.Integer(), ForeignKey('Lessons.Id'), nullable=False)
+    GroupsId = db.Column(db.Integer(), ForeignKey('Groups.Id'), nullable=False)
+    TeacherId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+    LessonDateTime = db.Column(db.Text(), nullable=False)
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return Users.get(user_id)
+def load_user(UserId):
+    return Users.query.get(UserId)
 
 
 @app.route('/', methods=['POST', 'GET'])
 def Login():
+    try:
+        logout_user()
+    except:
+        pass
+    if request.method == 'POST':
+        login = request.form.get('username')
+        password = request.form.get('password')
+        remember = True if request.form.get('remember') else False
 
-    username = request.form['username']
-    password = request.form['password']
+        user = Users.query.filter_by(UserLogin=login).first()
 
-    if 'userLogged' in session:
-        return redirect((url_for('main', username=session['userLogged'])))
-
-    if request.method == "POST":
-        if request.form['username'] in db:
-            session['userLogged'] = request.form['username']
-            return redirect(url_for('main', username=session['userLogged']))
-        else:
-
-            login_form = LoginForm(validate_on_submit='None', username=str(username), password=str(password), remember_me='Yes')
-
+        if check_password_hash(user.UserPassword, password):
+            login_user(user)
+            next_page = request.args.get('next')
             try:
-                db.session.add(login_form)
-                db.session.commit()
-                return redirect('/main')
-
+                return redirect(next_page)
             except:
-                return "Что-то сделанно не правильно"
+                return redirect(url_for('Main'))
 
+        if not check_password_hash(user.UserPassword, password):
+            flash('Error in login procession', category='error')
     return render_template('authorization.html')
 
 
-@app.route('/main/<username>')
-def personal_page(username):
-    if 'userLogged' not in session or session['userLogged'] != username:
-        abort(401)
-    else:
-        return f'profile of userv{username}'
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('Login'))
 
 
 @app.route('/main')
+@login_required
 def Main():
-    if 'visits' in session:
-        session['visits'] = session.get('visits') + 1
-    else:
-        session['visits'] = 1
-    return render_template('index.html', Users=Users.query.all())
+    return render_template('index.html')
 
 
-@app.route('/schedule')
+@app.route('/main/timetable')
+@login_required
 def Schedule():
-    return 'Расписание'
+    return render_template('timetable.html')
 
 
-@app.route('/teachers')
+@app.route('/main/teachers')
+@login_required
 def Teachers():
     return 'Учителя'
 
@@ -132,6 +170,13 @@ def Teachers():
 @app.errorhandler(404)
 def pageNotFound(error):
     return render_template('page404.html', title='Станица не найдена :(')
+
+
+@app.after_request
+def redirect_to_signin(response):
+    if response.status_code == 401:
+        return redirect(url_for('Login'))
+    return response
 
 
 if __name__ == '__main__':

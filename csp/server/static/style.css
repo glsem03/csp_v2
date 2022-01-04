@@ -86,14 +86,14 @@ body {
 
 /* Шапка */
 .header_logo_aut {
-    background: url(../img/logo.svg) no-repeat;
+    background: url(../static/img/logo.svg) no-repeat;
     width: 109px;
     height: 109px;
     margin: 0 auto;
 }
 
 .header_logo {
-    background: url(../img/logo.svg) no-repeat;
+    background: url(../static/img/logo.svg) no-repeat;
     width: 109px;
     height: 109px;
 }
@@ -188,7 +188,7 @@ body {
 }
 
 .login_img {
-    background: url("../img/login_black.svg") no-repeat;
+    background: url("../static/img/login_black.svg") no-repeat;
     width: 74px;
     height: 74px;
     border-radius: 50px;
@@ -196,7 +196,7 @@ body {
 }
 
 .login_img:hover {
-    background: url("../img/login_white.svg") no-repeat;
+    background: url("../static/img/login_white.svg") no-repeat;
 }
 
 /* Шапка */
@@ -333,7 +333,7 @@ body {
 .last_news_img {
     width: 50%;
     height: 550px;
-    background: url("../img/news_img.jpg") center;
+    background: url("../static/img/news_img.jpg") center;
     background-size: cover;
 }
 
