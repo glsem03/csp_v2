@@ -39,12 +39,13 @@ input {
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background: white;
-  line-height: 1.6;
-  background-color: black;
+    font-size: 18px;
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: white;
+    line-height: 1.6;
+    background-color: black;
 }
 
 .wrapper {
@@ -501,6 +502,7 @@ body {
     color: white;
     text-align: center;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     margin: 0 1px 1px 0;
@@ -584,7 +586,7 @@ body {
 
 .timetable_block {
     width: 32.739%;
-    height: 338px;
+    height: auto;
     margin-right: 15px;
     margin-bottom: 81px;
 }
@@ -597,7 +599,7 @@ body {
 
 .timetable_block_last {
     width: 32.739%;
-    height: 338px;
+    height: auto;
 }
 
 @media (max-width: 1712px){
@@ -638,6 +640,228 @@ body {
     .timetable_block {
         width: 100%;
     }
+}
+/*------------------------------------------------------------*/
+
+.grades_main {
+    width: 100%;
+    text-align: center;
+}
+
+.grades_block {
+    background: white;
+    width: 100%;
+    height: auto;
+    padding: 37px 54px;
+}
+
+.grades_inf {
+    width: 100%;
+    height: auto;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+
+@media (max-width: 768px){
+    .grades_block {
+        padding: 37px 0;
+    }
+}
+
+.grades_list {
+    display: flex;
+    width: 100%;
+}
+
+.subject_number {
+    color: white;
+    min-width: 57px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.subject_name {
+    color: white;
+    min-width: 323px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.grades {
+    color: white;
+    min-width: 742px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.lateness {
+    color: white;
+    min-width: 99px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.omission {
+    color: white;
+    min-width: 167px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.omission_all-diseace {
+    display: flex;
+}
+
+.omission_all {
+    color: white;
+    min-width: 83px;
+    height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.omission_diseace {
+    color: white;
+    min-width: 83px;
+    height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.average_score {
+    color: white;
+    min-width: 93px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.mounth_total {
+    color: white;
+    min-width: 82px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.subject_number-inf {
+    color: white;
+    min-width: 57px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.subject_name-inf {
+    color: white;
+    min-width: 323px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.grades-inf {
+    color: white;
+    min-width: 742px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.lateness-inf {
+    color: white;
+    min-width: 99px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.omission_all-inf {
+    color: white;
+    min-width: 83px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.omission_diseace-inf {
+    color: white;
+    min-width: 83px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.average_score-inf {
+    color: white;
+    min-width: 93px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
+}
+
+.mounth_total-inf {
+    color: white;
+    min-width: 82px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px 1px 0;
+    background: black;
 }
 
 /* Мейн */
