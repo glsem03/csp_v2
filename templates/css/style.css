@@ -446,7 +446,7 @@ body {
 }
 
 .short_grades {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 215px;
 }
 
