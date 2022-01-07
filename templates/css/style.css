@@ -864,6 +864,64 @@ body {
     background: black;
 }
 
+/*------------------------------------------------------*/
+
+.literature_block {
+    width: 100%;
+    text-align: center;
+}
+
+.search_field {
+    padding: 10px 19px;
+    max-width: 470px;
+    min-width: auto;
+    height: 60px;
+    background: white;
+    border-radius: 15px;
+    display: flex; 
+    align-items: center;
+    margin: 0 auto;
+}
+
+.search {
+    background: black;
+    width: 100%;
+    height: 40px;
+    color: white;
+    padding: 0 15px;
+}
+
+.search_btn {
+    background: url(..//img/pngwing1.png) no-repeat;
+    width: 28px;
+    height: 28px;
+    margin: 0 0 0 19px;
+}
+
+.literature_list {
+    margin: 75px 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.literature_item {
+    margin: 34px;
+}
+
+.lit_img {
+    background: white;
+    width: 268px;
+    height: 370px;
+}
+
+.lit_name {
+    color: white;
+    width: 268px;
+}
+
+
+
 /* Мейн */
 
 /* Футер */
