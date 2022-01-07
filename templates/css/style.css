@@ -445,6 +445,11 @@ body {
     height: 550px;
 }
 
+.short_grades {
+    overflow: scroll;
+    height: 215px;
+}
+
 .inf_block {
     width: 50%;
     height: 356px;
