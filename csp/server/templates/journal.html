@@ -7,29 +7,39 @@
 {% for i in range(1, items + 1) %}
 
     {% set Marks = [] %}
+    {% set MissedLesson = [] %}
+
     {% set lessonName = (Lessons.query.filter_by(Id=i).first()).LessonName %}
     {% set AllMarks = MarksList.query.filter_by(PupilId=id).all() %}
 
     {% for j in AllMarks %}
 
-    {{ j.Marks if j.Marks}}
-        {{ value if value }}
-        {{ value if value is not none }}
-        {{ value if value is not none else '' }}
             {% if j.LessonId == i %}
-            {{ Marks.append(j.Mark) }}
+            {{ Marks.append( j.Mark ) or ""}}
             {% endif %}
 
     {% endfor %}
 
     {% set Marks = Marks|join(', ') %}
 
+
+
+    {% set MissedLessonsUsers = MissedLessons.query.filter_by(UserId=id).all() %}
+    {% for t in MissedLessonsUsers %}
+
+            {% if t.SkippedLessonId == i and t.IsSkippedAllLesson == 1 %}
+                {{ MissedLesson.append( 'q' )}}
+            {% endif %}
+
+    {% endfor %}
+
+
     <div class="grades_list">
         <div class="subject_number-inf">{{ i }}</div>
         <div class="subject_name-inf">{{ lessonName }}</div>
-        <div class="grades-inf">{{  Marks|out_none }}</div>
+        <div class="grades-inf">{{  Marks|default('', True) }}</div>
         <div class="lateness-inf"></div>
-        <div class="omission_all-inf"></div>
+        <div class="omission_all-inf">{{ len(MissedLesson) }}</div>
         <div class="omission_diseace-inf"></div>
         <div class="average_score-inf"></div>
         <div class="mounth_total-inf"></div>

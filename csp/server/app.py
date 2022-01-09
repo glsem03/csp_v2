@@ -24,7 +24,7 @@ cur_id = int
 period = str
 
 
-empty_marks ={
+empty_marks = {
             "Математика": '',
             "Физика": '',
             "Астрономия": '',
@@ -96,7 +96,7 @@ def get_schedule(cur_day):
                 pairs.append(temp)
         except:
             break
-    return pairs, str(l)
+    return pairs
 
 
 class UserTypes(db.Model):
@@ -166,6 +166,7 @@ class MarksList(db.Model):
     LessonId = db.Column(db.Integer(), ForeignKey('Lessons.Id'), nullable=False)
     Mark = db.Column(db.Integer(), nullable=False)
     TeacherDesc = db.Column(db.Text())
+    Date = db.Column(db.Text())
 
     def __repr__(self):
         return str(self.Mark)
@@ -175,10 +176,13 @@ class MissedLessons(db.Model):
     __tablename__ = 'MissedLessons'
     Id = db.Column(db.Integer(), nullable=False, unique=True, primary_key=True)
     UserId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
-    SkippedLessonDateTime = db.Column(db.Text(), nullable=False)
-    SkippedAllDay = db.Column(db.Integer())
+    SkippedLessonDate = db.Column(db.Text(), nullable=False)
+    IsSkippedAllLesson = db.Column(db.Integer())
     SkipReasonTypeId = db.Column(db.Integer(), nullable=False)
     ElderDesc = db.Column(db.Text())
+    SkippedLessonTime = db.Column(db.Text())
+    SkippedLessonId = db.Column(db.Integer(), ForeignKey('Lessons.Id'))
+
 
 
 class MissedLessonsReason(db.Model):
@@ -259,7 +263,7 @@ def Main():
     global period
     user = load_user(cur_id)
 
-    marks = get_marks(cur_id)
+    '''marks = get_marks(cur_id)
     if not marks:
         marks = empty_marks
     else:
@@ -268,35 +272,23 @@ def Main():
                 for t in marks.keys():
                     if i == t:
                         empty_marks[i] = j
-                    '''else:
-                        empty_marks[i] = '''''
-        marks = empty_marks
+        marks = empty_marks'''
 
-    day_week = datetime.datetime.weekday
     day = str(datetime.date.today().day)
     month = str(datetime.date.today().month)
     if len(month) != 2:
         month = '0' + month
     period = day + "." + month
+    schedules = get_schedule(period)
 
-    schedules, l = get_schedule(period)
-
+    cur_day = datetime.datetime.today().isoweekday()
+    cur_day -= 1
+    allMarks = db.session.query(MarksList).filter(MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 7)).filter(MarksList.PupilId==cur_id).all()
     return render_template('main.html',
-                           item_one='Математика',        mark_one=marks['Математика'],
-                           item_two='Русский язык',      mark_two=marks['Русский Язык'],
-                           item_three='Литература',      mark_three=marks['Литература'],
-                           item_four='Английский язык',  mark_four=marks['Английский Язык'],
-                           item_five='Биология',         mark_five=marks['Биология'],
-                           item_six='Физика',            mark_six=marks['Физика'],
-                           item_seven='Астрономия',      mark_seven=marks['Астрономия'],
-                           item_eight='Физкультура',     mark_eight=marks['Физкультура'],
-                           item_nine='Информатика',      mark_nine=marks['Информатика'],
-                           item_ten='История',           mark_ten=marks['История'],
-                           item_eleven='Обществознание', mark_eleven=marks['Обществознание'],
-                           item_twelve='Обж',            mark_twelve=marks['Обж'],
+                           allMarks=allMarks,
+                           Lessons=Lessons,
 
                            period=period,
-
                            schedules=schedules,
                            )
 
@@ -304,7 +296,8 @@ def Main():
 @app.route('/timetable')
 @login_required
 def Schedule():
-    return render_template('timetable.html')
+    global cur_id
+    return render_template('timetable.html', TypeId=(Users.query.filter_by(UserId=cur_id).first()).UserTypeId)
 
 
 @app.route('/teachers')
@@ -322,11 +315,15 @@ def Journal():
                            items=12,
                            Lessons=Lessons,
                            MarksList=MarksList,
-                           float=float,
-                           int=int,
+                           MissedLessons=MissedLessons,
                            str=str,
-                           type=type,
+                           len=len,
                            )
+
+
+@app.route('/forgotpass')
+def Forgotpass():
+    return render_template('forgotpass.html')
 
 
 @app.errorhandler(404)

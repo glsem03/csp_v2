@@ -1,62 +1,21 @@
 {% extends 'index.html' %}
 
 {% block Marks %}
+{% for i in allMarks %}
+    {% set lessonName = (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName %}
     <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_one }}</div>
-        <div class="short_item-grades-inf">{{ mark_one }}</div>
+        <div class="short_item-grades-inf">{{ lessonName }}</div>
+        <div class="short_item-grades-inf">{{ i.Mark }}</div>
     </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_two }}</div>
-        <div class="short_item-grades-inf">{{ mark_two }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_three }}</div>
-        <div class="short_item-grades-inf">{{ mark_three }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_four }}</div>
-        <div class="short_item-grades-inf">{{ mark_four }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_five }}</div>
-        <div class="short_item-grades-inf">{{ mark_five }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_six }}</div>
-        <div class="short_item-grades-inf">{{ mark_six }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_seven }}</div>
-        <div class="short_item-grades-inf">{{ mark_seven }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_eight }}</div>
-        <div class="short_item-grades-inf">{{ mark_eight }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_nine }}</div>
-        <div class="short_item-grades-inf">{{ mark_nine }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_ten }}</div>
-        <div class="short_item-grades-inf">{{ mark_ten }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_eleven }}</div>
-        <div class="short_item-grades-inf">{{ mark_eleven }}</div>
-    </div>
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ item_twelve }}</div>
-        <div class="short_item-grades-inf">{{ mark_twelve }}</div>
-    </div>
+{% endfor %}
 {% endblock %}
 
 {% block Schedule %}
     {% for i in schedules %}
         <div class="timetable_line">
-            <div class="timetable_date">{{ i.LessonTime }}</div>
-            <div class="timetable_item">{{ i.Name }}</div>
-            <div class="timetable_class">{{ i.Office }}</div>
+            <div class="timetable_date"></div>
+            <div class="timetable_item"></div>
+            <div class="timetable_class"></div>
         </div>
     {% endfor %}
 {% endblock %}
