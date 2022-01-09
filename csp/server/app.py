@@ -5,10 +5,24 @@ from flask_login import LoginManager, logout_user, login_user, login_required, U
 from sqlalchemy import ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+from jinja2 import environment
+
+
+def out_none(val):
+    for t in val:
+        if not t is None or t != 'None' or t != '' or t != 'none':
+            t = t
+        else:
+            t = ''
+    return val
+
+environment.DEFAULT_FILTERS['out_none'] = out_none
+
 
 #session.modified = True
 cur_id = int
 period = str
+
 
 empty_marks ={
             "Математика": '',
@@ -153,6 +167,9 @@ class MarksList(db.Model):
     Mark = db.Column(db.Integer(), nullable=False)
     TeacherDesc = db.Column(db.Text())
 
+    def __repr__(self):
+        return str(self.Mark)
+
 
 class MissedLessons(db.Model):
     __tablename__ = 'MissedLessons'
@@ -176,11 +193,18 @@ class ScheduleList(db.Model):
     TeacherId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
     LessonTime = db.Column(db.Text())
     LessonDate = db.Column(db.Text())
-    Name = db.Column(db.Text(), ForeignKey('Lessons.LessonName'))
+    LessonId = db.Column(db.Integer(), ForeignKey('Lessons.LessonId'), nullable=False)
     Office = db.Column(db.Text(), ForeignKey('Offices.Audience'))
 
     def __repr__(self):
         return self.LessonDate
+
+
+def filter_suppress_none(val):
+    if not val is None:
+        return val
+    else:
+        return ''
 
 
 class Offices(db.Model):
@@ -292,11 +316,16 @@ def Teachers():
 @app.route('/journal')
 @login_required
 def Journal():
+    Marks = []
     return render_template('journal.html',
                            user_id=str(cur_id),
                            items=12,
                            Lessons=Lessons,
                            MarksList=MarksList,
+                           float=float,
+                           int=int,
+                           str=str,
+                           type=type,
                            )
 
 
