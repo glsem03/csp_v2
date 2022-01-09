@@ -17,28 +17,28 @@
 
         <header class="header">
             <div class="header_container container">
-                <a class="" href="#">
+                <a class="" href="index.html">
                     <div class="header_logo"></div>
                 </a>
 
                 <nav class="nav_menu menu">
                     <ul class="nav_list">
                         <li class="nav_item">
-                            <a href="/main/timetable" class="item_link">Расписание</a>
+                            <a href="/timetable" class="item_link">Расписание</a>
                         </li>
                         <li class="nav_item">
-                            <a href="/main/marks" class="item_link">Успеваемость</a>
+                            <a href="/journal" class="item_link">Успеваемость</a>
                         </li>
                         <li class="nav_item">
-                            <a href="/main/literature" class="item_link">Литература</a>
+                            <a href="/literature" class="item_link">Литература</a>
                         </li>
                         <li class="nav_item">
-                            <a href="/main/teachers" class="item_link">Учителя</a>
+                            <a href="#" class="item_link">Учителя</a>
                         </li>
                     </ul>
                 </nav>
 
-                <a href="/main/<username>">
+                <a href="#">
                     <div class="login">
                         <div class="login_img"></div>
                     </div>
@@ -75,21 +75,14 @@
                                     <div class="short_item-grades">Предметы</div>
                                     <div class="short_item-grades">Оценки</div>
                                 </div>
-                                <div class="item-grades-inf_line">
-                                    <div class="short_item-grades-inf">-</div>
-                                    <div class="short_item-grades-inf">-</div>
-                                </div>
+                                {% block Marks %} {% endblock %}
                             </div>
                         </div>
                         <div class="inf_block">
-                            <p class="subtitle">Расписание на</p>
+                            <p class="subtitle">Расписание на {{ period }}</p>
                             <div class="short_timetable">
                                 <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">-</div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
+                                    {% block Schedule %} {% endblock %}
                                 </div>
                             </div>
                         </div>

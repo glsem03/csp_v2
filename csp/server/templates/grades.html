@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>CSP project</title>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <header class="header">
+            <div class="header_container container">
+                <a class="" href="index.html">
+                    <div class="header_logo"></div>
+                </a>
+
+                <nav class="nav_menu menu">
+                    <ul class="nav_list">
+                        <li class="nav_item">
+                            <a href="/timetable" class="item_link">Расписание</a>
+                        </li>
+                        <li class="nav_item">
+                            <a href="/journal" class="item_link">Успеваемость</a>
+                        </li>
+                        <li class="nav_item">
+                            <a href="/literature" class="item_link">Литература</a>
+                        </li>
+                        <li class="nav_item">
+                            <a href="#" class="item_link">Учителя</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <a href="#">
+                    <div class="login">
+                        <div class="login_img"></div>
+                    </div>
+                </a>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <div class="grades_main">
+                    <p class="title">Ваши оценки за месяц</p>
+                    <div class="grades_block">
+                        <div class="grades_inf">
+                            <div class="grades_list">
+                                <div class="subject_number">№</div>
+                                <div class="subject_name">Предмет</div>
+                                <div class="grades">Оценки</div>
+                                <div class="lateness">Опоздания</div>
+                                <div class="omission_inf">
+                                    <div class="omission">Пропуски</div>
+                                    <div class="omission_all-diseace">
+                                        <div class="omission_all">Всего</div>
+                                        <div class="omission_diseace">По болезни</div>
+                                    </div>
+                                </div>
+                                <div class="average_score">Средний балл</div>
+                                <div class="mounth_total">Итог за месяц</div>
+                            </div> 
+                            {% block table %} {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p class="footer_txt">Copyright by CSP @2021-2021</p>
+                <div class="footer_img"></div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

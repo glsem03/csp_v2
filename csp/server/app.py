@@ -1,9 +1,29 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, g, abort, flash
+from flask import Flask, render_template, request, redirect, url_for, g, abort, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, logout_user, login_user, login_required, UserMixin
 from sqlalchemy import ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
+
+#session.modified = True
+cur_id = int
+period = str
+
+empty_marks ={
+            "Математика": '',
+            "Физика": '',
+            "Астрономия": '',
+            "Физкультура": '',
+            "Информатика": '',
+            "Английский Язык": '',
+            "Русский Язык": '',
+            "История": '',
+            "Обществознание": '',
+            "Биология": '',
+            "Литература": '',
+            "Обж": ''
+        }
 
 # !config info!
 SECRET_KEY = 'so-so-so-so-so-difficult-key'
@@ -19,6 +39,50 @@ app.config.update(dict(DATABASE=os.path.join(app.root_path, 'nkedb.db')))
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
+
+
+def get_lessons(*name):
+    list_of_lessons = []
+    for i in name:
+        lesson = Lessons.query.filter_by(LessonName=i).first()
+        list_of_lessons.append(lesson)
+        print(list_of_lessons, lesson)
+    return list_of_lessons
+
+
+def get_marks(id):
+    marks = []
+    iter = 0
+    while True:
+        iter += 1
+        try:
+            mark = MarksList.query.filter_by(Id=iter).first()
+            if mark.PupilId == id:
+                l = Lessons.query.filter_by(Id=mark.LessonId).first()
+                marks.append(l.LessonName)
+                marks.append(mark.Mark)
+        except:
+            break
+    try:
+        dict = {marks[i]: marks[i + 1] for i in range(0, len(marks), 2)}
+        return dict
+    except:
+        return {}
+
+
+def get_schedule(cur_day):
+    pairs =[]
+    iter = 0
+    l = ScheduleList.query.filter_by(LessonDate=cur_day).all()
+    while True:
+        try:
+            iter += 1
+            temp = ScheduleList.query.filter_by(Id=iter).first()
+            if temp.LessonDate == cur_day:
+                pairs.append(temp)
+        except:
+            break
+    return pairs, str(l)
 
 
 class UserTypes(db.Model):
@@ -47,7 +111,7 @@ class Users(db.Model, UserMixin):
         return self.UserId
 
     def __repr__(self):
-        return '<UserLogin %r>' % (self.UserLogin)
+        return '<UserId %r>' % self.UserId
 
 
 class Groups(db.Model):
@@ -74,15 +138,18 @@ class HomeWorkList(db.Model):
 
 class Lessons(db.Model):
     __tablename__ = 'Lessons'
-    Id = db.Column(db.Integer, nullable=False, unique=True, primary_key=True)
-    LessonName = db.Column(db.Text(), nullable=False)
+    Id = db.Column(db.Integer, nullable=False, unique=True)
+    LessonName = db.Column(db.Text(), nullable=False, primary_key=True)
+
+    def __repr__(self):
+        return 'LessonId %r>' % (self.Id)
 
 
 class MarksList(db.Model):
     __tablename__ = 'MarksList'
     Id = db.Column(db.Integer(), nullable=False, unique=True, primary_key=True)
     PupilId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
-    TeacherId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
+    LessonId = db.Column(db.Integer(), ForeignKey('Lessons.Id'), nullable=False)
     Mark = db.Column(db.Integer(), nullable=False)
     TeacherDesc = db.Column(db.Text())
 
@@ -105,10 +172,19 @@ class MissedLessonsReason(db.Model):
 class ScheduleList(db.Model):
     __tablename__ = 'ScheduleList'
     Id = db.Column(db.Integer(), nullable=False, primary_key=True)
-    LessonId = db.Column(db.Integer(), ForeignKey('Lessons.Id'), nullable=False)
-    GroupsId = db.Column(db.Integer(), ForeignKey('Groups.Id'), nullable=False)
+    GroupId = db.Column(db.Integer(), ForeignKey('Groups.Id'), nullable=False)
     TeacherId = db.Column(db.Integer(), ForeignKey('Users.UserId'), nullable=False)
-    LessonDateTime = db.Column(db.Text(), nullable=False)
+    LessonTime = db.Column(db.Text())
+    LessonDate = db.Column(db.Text())
+    Name = db.Column(db.Text(), ForeignKey('Lessons.LessonName'))
+    Office = db.Column(db.Text(), ForeignKey('Offices.Audience'))
+
+    def __repr__(self):
+        return self.LessonDate
+
+
+class Offices(db.Model):
+    Audience = db.Column(db.Text(), primary_key=True, nullable=False)
 
 
 @login_manager.user_loader
@@ -118,6 +194,7 @@ def load_user(UserId):
 
 @app.route('/', methods=['POST', 'GET'])
 def Login():
+    global cur_id
     try:
         logout_user()
     except:
@@ -130,15 +207,17 @@ def Login():
         user = Users.query.filter_by(UserLogin=login).first()
 
         if check_password_hash(user.UserPassword, password):
+            cur_id = user.UserId
             login_user(user)
             next_page = request.args.get('next')
             try:
                 return redirect(next_page)
             except:
-                return redirect(url_for('Main'))
+                return redirect(url_for('Main'), )
 
         if not check_password_hash(user.UserPassword, password):
             flash('Error in login procession', category='error')
+            return render_template('authorization.html')
     return render_template('authorization.html')
 
 
@@ -149,22 +228,76 @@ def logout():
     return redirect(url_for('Login'))
 
 
-@app.route('/main')
+@app.route('/main', methods=['POST', 'GET'])
 @login_required
 def Main():
-    return render_template('index.html')
+    global cur_id
+    global period
+    user = load_user(cur_id)
+
+    marks = get_marks(cur_id)
+    if not marks:
+        marks = empty_marks
+    else:
+        for i in empty_marks.keys():
+            for j in marks.values():
+                for t in marks.keys():
+                    if i == t:
+                        empty_marks[i] = j
+                    '''else:
+                        empty_marks[i] = '''''
+        marks = empty_marks
+
+    day_week = datetime.datetime.weekday
+    day = str(datetime.date.today().day)
+    month = str(datetime.date.today().month)
+    if len(month) != 2:
+        month = '0' + month
+    period = day + "." + month
+
+    schedules, l = get_schedule(period)
+
+    return render_template('main.html',
+                           item_one='Математика',        mark_one=marks['Математика'],
+                           item_two='Русский язык',      mark_two=marks['Русский Язык'],
+                           item_three='Литература',      mark_three=marks['Литература'],
+                           item_four='Английский язык',  mark_four=marks['Английский Язык'],
+                           item_five='Биология',         mark_five=marks['Биология'],
+                           item_six='Физика',            mark_six=marks['Физика'],
+                           item_seven='Астрономия',      mark_seven=marks['Астрономия'],
+                           item_eight='Физкультура',     mark_eight=marks['Физкультура'],
+                           item_nine='Информатика',      mark_nine=marks['Информатика'],
+                           item_ten='История',           mark_ten=marks['История'],
+                           item_eleven='Обществознание', mark_eleven=marks['Обществознание'],
+                           item_twelve='Обж',            mark_twelve=marks['Обж'],
+
+                           period=period,
+
+                           schedules=schedules,
+                           )
 
 
-@app.route('/main/timetable')
+@app.route('/timetable')
 @login_required
 def Schedule():
     return render_template('timetable.html')
 
 
-@app.route('/main/teachers')
+@app.route('/teachers')
 @login_required
 def Teachers():
     return 'Учителя'
+
+
+@app.route('/journal')
+@login_required
+def Journal():
+    return render_template('journal.html',
+                           user_id=str(cur_id),
+                           items=12,
+                           Lessons=Lessons,
+                           MarksList=MarksList,
+                           )
 
 
 @app.errorhandler(404)

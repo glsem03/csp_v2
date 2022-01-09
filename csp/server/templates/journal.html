@@ -1,0 +1,21 @@
+{% extends "grades.html" %}
+
+{% block table %}
+{% set id = user_id %}
+{% for i in range(1, items + 1) %}
+    {% set lessonName = (Lessons.query.filter_by(Id=i).first()).LessonName %}
+    {% set Marks = ((((MarksList.query.filter_by(PupilId=id).first()).query.filter_by(LessonId=i)).all())[i - 1]).Mark%}
+    <div class="grades_list">
+        <div class="subject_number-inf">{{ i }}</div>
+        <div class="subject_name-inf">{{ lessonName }}</div>
+        <div class="grades-inf">{{ Marks }}</div>
+        <div class="lateness-inf">{{ i.lateness }}</div>
+        <div class="omission_all-inf">{{ i.all }}</div>
+        <div class="omission_diseace-inf">{{ i.omission }}</div>
+        <div class="average_score-inf">{{ i.score }}</div>
+        <div class="mounth_total-inf">{{ i.total }}</div>
+    </div>
+
+{% endfor %}
+
+{% endblock %}
