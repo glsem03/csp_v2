@@ -25,20 +25,19 @@ period = str
 
 
 empty_marks = {
-            "Математика": '',
-            "Физика": '',
-            "Астрономия": '',
-            "Физкультура": '',
-            "Информатика": '',
-            "Английский Язык": '',
-            "Русский Язык": '',
-            "История": '',
-            "Обществознание": '',
-            "Биология": '',
-            "Литература": '',
-            "Обж": ''
+            "Математика": [],
+            "Физика": [],
+            "Астрономия": [],
+            "Физкультура": [],
+            "Информатика": [],
+            "Английский Язык": [],
+            "Русский Язык": [],
+            "История": [],
+            "Обществознание": [],
+            "Биология": [],
+            "Литература": [],
+            "Обж": []
         }
-
 # !config info!
 SECRET_KEY = 'so-so-so-so-so-difficult-key'
 DATABASE = '/csp/server/nkedb.db'
@@ -284,8 +283,15 @@ def Main():
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
     allMarks = db.session.query(MarksList).filter(MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 7)).filter(MarksList.PupilId==cur_id).all()
+
+    for i in empty_marks.keys():
+        for j in allMarks:
+            if i == (Lessons.query.filter_by(Id=j.LessonId).first()).LessonName:
+                empty_marks[i].append(j)
+    print(empty_marks)
     return render_template('main.html',
                            allMarks=allMarks,
+                           empty_marks=empty_marks,
                            Lessons=Lessons,
 
                            period=period,

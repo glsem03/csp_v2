@@ -1,12 +1,16 @@
 {% extends 'index.html' %}
 
 {% block Marks %}
-{% for i in allMarks %}
-    {% set lessonName = (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName %}
-    <div class="item-grades-inf_line">
-        <div class="short_item-grades-inf">{{ lessonName }}</div>
-        <div class="short_item-grades-inf">{{ i.Mark }}</div>
-    </div>
+{% for i in empty_marks.keys() %}
+    {% if not empty_marks[i] == [] %}
+        {% set lessonName = i %}
+        {% set marks = empty_marks[lessonName] %}
+        <div class="item-grades-inf_line">
+            <div class="short_item-grades-inf">{{ lessonName }}</div>
+            <div class="short_item-grades-inf">{{ marks|join(' ,') }}</div>
+        </div>
+        {{marks.clear() or "" }}
+    {% endif %}
 {% endfor %}
 {% endblock %}
 
