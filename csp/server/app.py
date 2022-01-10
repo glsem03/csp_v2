@@ -16,28 +16,27 @@ def out_none(val):
             t = ''
     return val
 
+
 environment.DEFAULT_FILTERS['out_none'] = out_none
 
-
-#session.modified = True
+# session.modified = True
 cur_id = int
 period = str
 
-
 empty_marks = {
-            "Математика": [],
-            "Физика": [],
-            "Астрономия": [],
-            "Физкультура": [],
-            "Информатика": [],
-            "Английский Язык": [],
-            "Русский Язык": [],
-            "История": [],
-            "Обществознание": [],
-            "Биология": [],
-            "Литература": [],
-            "Обж": []
-        }
+    "Математика": [],
+    "Физика": [],
+    "Астрономия": [],
+    "Физкультура": [],
+    "Информатика": [],
+    "Английский Язык": [],
+    "Русский Язык": [],
+    "История": [],
+    "Обществознание": [],
+    "Биология": [],
+    "Литература": [],
+    "Обж": []
+}
 # !config info!
 SECRET_KEY = 'so-so-so-so-so-difficult-key'
 DATABASE = '/csp/server/nkedb.db'
@@ -48,6 +47,8 @@ app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nkedb.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'nkedb.db')))
+app.config['SECRET_KEY'] = '3e301b1682e2833089377a8c440e19416ac7f6c9'
+app.permanent_session_lifetime = datetime.timedelta(days=7)
 
 db = SQLAlchemy(app)
 
@@ -84,7 +85,7 @@ def get_marks(id):
 
 
 def get_schedule(cur_day):
-    pairs =[]
+    pairs = []
     iter = 0
     l = ScheduleList.query.filter_by(LessonDate=cur_day).all()
     while True:
@@ -183,7 +184,6 @@ class MissedLessons(db.Model):
     SkippedLessonId = db.Column(db.Integer(), ForeignKey('Lessons.Id'))
 
 
-
 class MissedLessonsReason(db.Model):
     __tablename__ = 'MissedLessonsReason'
     SkipReasonName = db.Column(db.Text(), nullable=False, primary_key=True)
@@ -221,31 +221,36 @@ def load_user(UserId):
 
 @app.route('/', methods=['POST', 'GET'])
 def Login():
+    session.permanent = True
     global cur_id
-    try:
-        logout_user()
-    except:
-        pass
-    if request.method == 'POST':
-        login = request.form.get('username')
-        password = request.form.get('password')
-        remember = True if request.form.get('remember') else False
+    if 'users_cookies' in session:
+        return redirect(url_for('Main'), )
+    else:
+        try:
+            logout_user()
+        except:
+            pass
+        if request.method == 'POST':
+            login = request.form.get('username')
+            password = request.form.get('password')
+            remember = True if request.form.get('remember') else False
 
-        user = Users.query.filter_by(UserLogin=login).first()
+            user = Users.query.filter_by(UserLogin=login).first()
 
-        if check_password_hash(user.UserPassword, password):
-            cur_id = user.UserId
-            login_user(user)
-            next_page = request.args.get('next')
-            try:
-                return redirect(next_page)
-            except:
-                return redirect(url_for('Main'), )
+            if check_password_hash(user.UserPassword, password):
+                cur_id = user.UserId
+                login_user(user)
+                next_page = request.args.get('next')
+                try:
+                    return redirect(next_page)
+                except:
+                    session['users_cookies'] = 1
+                    return redirect(url_for('Main'), )
 
-        if not check_password_hash(user.UserPassword, password):
-            flash('Error in login procession', category='error')
-            return render_template('authorization.html')
-    return render_template('authorization.html')
+            if not check_password_hash(user.UserPassword, password):
+                flash('Error in login procession', category='error')
+                return render_template('authorization.html')
+        return render_template('authorization.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -282,7 +287,9 @@ def Main():
 
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
-    allMarks = db.session.query(MarksList).filter(MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 7)).filter(MarksList.PupilId==cur_id).all()
+    allMarks = db.session.query(MarksList).filter(
+        MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 7)).filter(
+        MarksList.PupilId == cur_id).all()
 
     for i in empty_marks.keys():
         for j in allMarks:
@@ -303,8 +310,34 @@ def Main():
 @login_required
 def Schedule():
     global cur_id
-    return render_template('timetable.html', TypeId=(Users.query.filter_by(UserId=cur_id).first()).UserTypeId)
-
+    day = str(datetime.date.today().day)
+    month = str(datetime.date.today().month)
+    if len(month) != 2:
+        month = '0' + month
+    period = day + "." + month
+    cur_day = datetime.datetime.today().isoweekday()
+    cur_day -= 1
+    monday = str(int(period.split('.')[0]) - cur_day) + '.' + period.split('.')[1]
+    tuesday = str(int(monday.split('.')[0]) + 1) + '.' + period.split('.')[1]
+    wednesday = str(int(monday.split('.')[0]) + 2) + '.' + period.split('.')[1]
+    thursday = str(int(monday.split('.')[0]) + 3) + '.' + period.split('.')[1]
+    friday = str(int(monday.split('.')[0]) + 4) + '.' + period.split('.')[1]
+    saturday = str(int(monday.split('.')[0]) + 5) + '.' + period.split('.')[1]
+    schedules_monday = ScheduleList.query.filter_by(LessonDate=monday).all()
+    schedules_tuesday = ScheduleList.query.filter_by(LessonDate=tuesday).all()
+    schedules_wednesday = ScheduleList.query.filter_by(LessonDate=wednesday).all()
+    schedules_thursday = ScheduleList.query.filter_by(LessonDate=thursday).all()
+    schedules_friday = ScheduleList.query.filter_by(LessonDate=friday).all()
+    schedules_saturday = ScheduleList.query.filter_by(LessonDate=saturday).all()
+    print(schedules_monday, schedules_tuesday)
+    return render_template('schedule.html',
+                           Lessons=Lessons,
+                           schedules_monday=schedules_monday,
+                           schedules_tuesday=schedules_tuesday,
+                           schedules_wednesday=schedules_wednesday,
+                           schedules_thursday=schedules_thursday,
+                           schedules_friday=schedules_friday,
+                           schedules_saturday=schedules_saturday,)
 
 @app.route('/teachers')
 @login_required

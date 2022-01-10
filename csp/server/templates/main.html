@@ -17,9 +17,9 @@
 {% block Schedule %}
     {% for i in schedules %}
         <div class="timetable_line">
-            <div class="timetable_date"></div>
-            <div class="timetable_item"></div>
-            <div class="timetable_class"></div>
+            <div class="timetable_date">{{ i.LessonTime }}</div>
+            <div class="timetable_item">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
+            <div class="timetable_class">{{ i.Office }}</div>
         </div>
     {% endfor %}
 {% endblock %}
