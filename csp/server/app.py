@@ -48,6 +48,8 @@ app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nkedb.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'nkedb.db')))
+app.config['SECRET_KEY'] = '3e301b1682e2833089377a8c440e19416ac7f6c9'
+app.permanent_session_lifetime = datetime.timedelta(days=7)
 
 db = SQLAlchemy(app)
 
@@ -221,31 +223,36 @@ def load_user(UserId):
 
 @app.route('/', methods=['POST', 'GET'])
 def Login():
+    session.permanent = True
     global cur_id
-    try:
-        logout_user()
-    except:
-        pass
-    if request.method == 'POST':
-        login = request.form.get('username')
-        password = request.form.get('password')
-        remember = True if request.form.get('remember') else False
+    if 'users_cookies' in session:
+        return redirect(url_for('Main'), )
+    else:
+        try:
+            logout_user()
+        except:
+            pass
+        if request.method == 'POST':
+            login = request.form.get('username')
+            password = request.form.get('password')
+            remember = True if request.form.get('remember') else False
 
-        user = Users.query.filter_by(UserLogin=login).first()
+            user = Users.query.filter_by(UserLogin=login).first()
 
-        if check_password_hash(user.UserPassword, password):
-            cur_id = user.UserId
-            login_user(user)
-            next_page = request.args.get('next')
-            try:
-                return redirect(next_page)
-            except:
-                return redirect(url_for('Main'), )
+            if check_password_hash(user.UserPassword, password):
+                cur_id = user.UserId
+                login_user(user)
+                next_page = request.args.get('next')
+                try:
+                    return redirect(next_page)
+                except:
+                    session['users_cookies'] = 1
+                    return redirect(url_for('Main'), )
 
-        if not check_password_hash(user.UserPassword, password):
-            flash('Error in login procession', category='error')
-            return render_template('authorization.html')
-    return render_template('authorization.html')
+            if not check_password_hash(user.UserPassword, password):
+                flash('Error in login procession', category='error')
+                return render_template('authorization.html')
+        return render_template('authorization.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
