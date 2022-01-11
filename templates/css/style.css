@@ -932,6 +932,86 @@ body {
 }
 
 
+/* --------------------------------------------------------------------- */
+
+.teachers_block {
+    width: 100%;
+    text-align: center;
+}
+
+.teachers {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.teacher_item {
+    display: flex;
+    height: auto;
+    width: 691px;
+    margin: 0 auto 75px auto;
+}
+
+.teacher_img {
+    background: white;
+    width: 38.785%;
+    height: min-content;
+}
+
+.teacher_inf {
+    background: white;
+    width: 59.049%;
+    height: 291px;
+    margin: 0 0 0 15px;
+}
+
+.teachers_txt {
+    margin: 20px auto 20px auto;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.teachers_timetable {
+    background: black;
+    color: white;
+    width: 90.199%;
+    height: 43px;
+    margin: 130px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.teachers_img {
+    height: 296px;
+}
+
+@media (max-width: 724px){
+    .teacher_item {
+        width: 100%;
+        display: block;
+    }
+
+    .teacher_img {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .teacher_inf {
+        margin: 0 auto;
+        width: 80%;
+    }
+}
+
+@media (max-width: 635px){
+    .teacher_img {
+        width: 70%;
+    }
+
+    .teacher_inf {
+        width: 90%;
+    }
+}
 
 /* Мейн */
 
