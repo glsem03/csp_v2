@@ -593,8 +593,7 @@ body {
 .timetable_block {
     width: 32.739%;
     height: auto;
-    
-    margin-bottom: 81px;
+    margin: 0 5px 81px 5px;
 }
 
 
