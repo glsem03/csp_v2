@@ -311,6 +311,10 @@ body {
     transition: 0.5s;
 }
 
+.enter_button {
+    border-radius: 50px;
+}
+
 .enter_btn:hover {
     color: white;
     background: black;
