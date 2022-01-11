@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../static/style.css">
     <title>CSP project</title>
 </head>
 
@@ -17,23 +17,23 @@
 
         <header class="header">
             <div class="header_container container">
-                <a class="" href="index.html">
+                <a class="" href="/timetable">
                     <div class="header_logo"></div>
                 </a>
 
                 <nav class="nav_menu menu">
                     <ul class="nav_list">
                         <li class="nav_item">
-                            <a href="timetable.html" class="item_link">Расписание</a>
+                            <a href="/timetable" class="item_link">Расписание</a>
                         </li>
                         <li class="nav_item">
-                            <a href="grades.html" class="item_link">Успеваемость</a>
+                            <a href="/journal" class="item_link">Успеваемость</a>
                         </li>
                         <li class="nav_item">
-                            <a href="literature.html" class="item_link">Литература</a>
+                            <a href="/literature" class="item_link">Литература</a>
                         </li>
                         <li class="nav_item">
-                            <a href="teachers.html" class="item_link">Учителя</a>
+                            <a href="#" class="item_link">Учителя</a>
                         </li>
                     </ul>
                 </nav>
@@ -53,65 +53,41 @@
                     <div class="timetable">
                         <div class="timetable_list">
                             <div class="timetable_block">
-                                <p class="subtitle">2021 20.12 понедельник</p>
+                                <p class="subtitle"></p>
                                 <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item"></div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
+                                    {% block monday %} {% endblock %}
                                 </div>
                             </div>
                             <div class="timetable_block">
-                                <p class="subtitle">2021 20.12 понедельник</p>
+                                <p class="subtitle"></p>
                                 <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">-</div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
+                                    {% block tuesday %} {% endblock %}
+                                </div>
+                            </div>
+                            <div class="timetable_block_last">
+                                <p class="subtitle"></p>
+                                <div class="short_timetable">
+                                    {% block wednesday %} {% endblock %}
                                 </div>
                             </div>
                             <div class="timetable_block">
-                                <p class="subtitle">2021 20.12 понедельник</p>
+                                <p class="subtitle"></p>
                                 <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">-</div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
+                                    {% block thursday %} {% endblock %}
                                 </div>
-                            </div> 
+                            </div>
                             <div class="timetable_block">
-                                <p class="subtitle">2021 20.12 понедельник</p>
+                                <p class="subtitle"></p>
                                 <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">-</div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
+                                    {% block friday %} {% endblock %}
                                 </div>
-                            </div> 
-                            <div class="timetable_block">
-                                <p class="subtitle">2021 20.12 понедельник</p>
+                            </div>
+                            <div class="timetable_block_last">
+                                <p class="subtitle"></p>
                                 <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">-</div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
+                                    {% block saturday %} {% endblock %}
                                 </div>
-                            </div> 
-                            <div class="timetable_block">
-                                <p class="subtitle">2021 20.12 понедельник</p>
-                                <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">-</div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
-                                </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>

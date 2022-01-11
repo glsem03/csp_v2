@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>CSP project</title>
 </head>
 
@@ -24,13 +24,13 @@
                 <nav class="nav_menu menu">
                     <ul class="nav_list">
                         <li class="nav_item">
-                            <a href="timetable.html" class="item_link">Расписание</a>
+                            <a href="/timetable" class="item_link">Расписание</a>
                         </li>
                         <li class="nav_item">
-                            <a href="grades.html" class="item_link">Успеваемость</a>
+                            <a href="/journal" class="item_link">Успеваемость</a>
                         </li>
                         <li class="nav_item">
-                            <a href="literature.html" class="item_link">Литература</a>
+                            <a href="/literature" class="item_link">Литература</a>
                         </li>
                         <li class="nav_item">
                             <a href="#" class="item_link">Учителя</a>
@@ -74,18 +74,15 @@
                                 <div class="item-grades_line">
                                     <div class="short_item-grades">Предметы</div>
                                     <div class="short_item-grades">Оценки</div>
-                                </div>                   
+                                </div>
+                                {% block Marks %} {% endblock %}
                             </div>
                         </div>
                         <div class="inf_block">
-                            <p class="subtitle">Расписание на</p>
+                            <p class="subtitle">Расписание на {{ period }}</p>
                             <div class="short_timetable">
                                 <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">-</div>
-                                        <div class="timetable_class">-</div>
-                                    </div>
+                                    {% block Schedule %} {% endblock %}
                                 </div>
                             </div>
                         </div>

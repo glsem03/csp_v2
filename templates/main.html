@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block Marks %}
+{% for i in empty_marks.keys() %}
+    {% if not empty_marks[i] == [] %}
+        {% set lessonName = i %}
+        {% set marks = empty_marks[lessonName] %}
+        <div class="item-grades-inf_line">
+            <div class="short_item-grades-inf">{{ lessonName }}</div>
+            <div class="short_item-grades-inf">{{ marks|join(' ,') }}</div>
+        </div>
+        {{marks.clear() or "" }}
+    {% endif %}
+{% endfor %}
+{% endblock %}
+
+{% block Schedule %}
+    {% for i in schedules %}
+        <div class="timetable_line">
+            <div class="timetable_date">{{ i.LessonTime }}</div>
+            <div class="timetable_item">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
+            <div class="timetable_class">{{ i.Office }}</div>
+        </div>
+    {% endfor %}
+{% endblock %}

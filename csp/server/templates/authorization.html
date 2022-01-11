@@ -15,7 +15,7 @@
     <div class="wrapper">
 
         <header class="header">
-            <div class="header_container container">
+            <div class="header_container_aut container">
                 <a class="" href="#">
                     <div class="header_logo_aut"></div>
                 </a>
@@ -27,24 +27,20 @@
                 <div class="authorization_block">
                     <p class="welcome_txt">Добро пожаловать!</p>
                     <p class="welcome_txt">Пожалуйста авторизуйтесь</p>
+                    <p class="wrong_password">Пароль или логин неверный</p>
                     <div class="authorization">
                         <form method="post">
                         <div class="data">
                             <p class="enter_data">Введите ваш логин</p>
-                            <div class="data_field_block">
-                                <input class="data_field" type="text" name="username" id="username">
-                            </div>
+                            <div class="data_field_block"><input class="data_field" type="text" name="username" id="username"></div>
                         </div>
                         <div class="data-b">
                             <p class="enter_data-b">Введите ваш пароль</p>
-                            <div class="data_field_block">
-                                <input class="data_field" type="text" name="password" id="password">
-                            </div>
+                            <div class="data_field_block"><input class="data_field" type="text" name="password" id="password"></div>
+                            <a href="/forgotpass"><p class="forgot_password">Забыли пароль?</p></a>
                         </div>
                             <input type="submit" class="enter_btn" value="Войти">
                         </form>
-                        <p><input type="checkbox" name="remainme" /> Запомнить меня</p>
-                        <a href="forgotpass.html"><p class="forgot_password">Забыли пароль?</p></a>
                     </div>
                 </div>
             </div>
