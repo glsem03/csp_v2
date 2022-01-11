@@ -533,6 +533,7 @@ body {
     color: white;
     text-align: center;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     margin: 0 0 1px 0;
@@ -592,9 +593,10 @@ body {
 .timetable_block {
     width: 32.739%;
     height: auto;
-    margin-right: 15px;
+    
     margin-bottom: 81px;
 }
+
 
 .timetable_main {
     background: black;
