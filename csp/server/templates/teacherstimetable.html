@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>CSP project</title>
 </head>
 
@@ -17,7 +17,7 @@
 
         <header class="header">
             <div class="header_container container">
-                <a class="" href="/main">
+                <a class="" href="/timetable">
                     <div class="header_logo"></div>
                 </a>
 
@@ -33,7 +33,7 @@
                             <a href="/literature" class="item_link">Литература</a>
                         </li>
                         <li class="nav_item">
-                            <a href="/teachers" class="item_link">Учителя</a>
+                            <a href="#" class="item_link">Учителя</a>
                         </li>
                     </ul>
                 </nav>
@@ -52,9 +52,16 @@
                     <p class="title">Расписание на неделю</p>
                     <div class="timetable">
                         <div class="timetable_list">
-
-                            {% block timetable %} {% endblock %}
-
+                            <div class="timetable_block">
+                                <p class="subtitle"></p>
+                                <div class="short_timetable">
+                                    <div class="timetable_line">
+                                        <div class="timetable_date"></div>
+                                        <div class="timetable_item"></div>
+                                        <div class="timetable_class"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

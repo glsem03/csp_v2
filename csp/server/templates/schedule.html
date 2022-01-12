@@ -1,71 +1,34 @@
 {% extends 'timetable.html' %}
 
-{% block monday %}
-{% for i in schedules_monday %}
-    <div class="timetable_line">
-        <div class="timetable_date">{{ i.LessonTime }}</div>
-        <div class="timetable_item">{{ Lessons.query.filter_by(Id=i.LessonId).first().LessonName }}</div>
-        <div class="timetable_class">{{ i.Office }}</div>
+{% block timetable %}
+
+{% for j in dates %}
+    {% set year = datetime.datetime.today().year %}
+    {% set full_date = j + '.' + str(year) %}
+    {% set workdate = datetime.datetime.strptime(full_date, "%d.%m.%Y") %}
+    {% set week_day = calendar.day_name[workdate.date().weekday()] %}
+    {% set schedules_filtred = ScheduleList.query.filter(ScheduleList.LessonDate.between((int(DAY) - cur_day), (int(DAY) - cur_day) + 7)).filter_by(LessonDate=j).all() %}
+
+    {% set subtitle = [j, week_day] %}
+
+    <div class="timetable_block">
+        <div class="short_timetable">
+            <p class="subtitle">{{ subtitle | join(", ") or "" }}</p>
+
+            {% for i in schedules_filtred %}
+
+
+                        <div class="timetable_line">
+                            <div class="timetable_date">{{ i.LessonTime }}</div>
+                            <div class="timetable_item">{{ Lessons.query.filter_by(Id=i.LessonId).first().LessonName }}</div>
+                            <div class="timetable_class">{{ i.Office }}</div>
+                        </div>
+
+
+            {% endfor %}
+
+        </div>
     </div>
 {% endfor %}
 {% endblock %}
 
-
-
-{% block tuesday %}
-{% for i in schedules_tuesday %}
-    <div class="timetable_line">
-        <div class="timetable_date">{{ i.LessonTime }}</div>
-        <div class="timetable_item">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
-        <div class="timetable_class">{{ i.Office }}</div>
-    </div>
-{% endfor %}
-{% endblock %}
-
-
-
-{% block wednesday %}
-{% for i in schedules_wednesday %}
-    <div class="timetable_line">
-        <div class="timetable_date">{{ i.LessonTime }}</div>
-        <div class="timetable_item">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
-        <div class="timetable_class">{{ i.Office }}</div>
-    </div>
-{% endfor %}
-{% endblock %}
-
-
-
-{% block thursday %}
-{% for i in schedules_thursday %}
-    <div class="timetable_line">
-        <div class="timetable_date">{{ i.LessonTime }}</div>
-        <div class="timetable_item">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
-        <div class="timetable_class">{{ i.Office }}</div>
-    </div>
-{% endfor %}
-{% endblock %}
-
-
-
-{% block friday %}
-{% for i in schedules_friday %}
-    <div class="timetable_line">
-        <div class="timetable_date">{{ i.LessonTime }}</div>
-        <div class="timetable_item">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
-        <div class="timetable_class">{{ i.Office }}</div>
-    </div>
-{% endfor %}
-{% endblock %}
-
-
-
-{% block saturday %}
-{% for i in schedules_saturday %}
-    <div class="timetable_line">
-        <div class="timetable_date">{{ i.LessonTime }}</div>
-        <div class="timetable_item">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
-        <div class="timetable_class">{{ i.Office }}</div>
-    </div>
-{% endfor %}
-{% endblock %}

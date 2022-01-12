@@ -222,6 +222,20 @@ body {
     height: 596px;
 }
 
+.remember_me {
+    color: white;
+    font-size: 14px;
+    align-items: center;
+    margin: 20px 0 0 0;
+}
+
+.remember_checkbox {
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin: 8px 10px 0 auto;
+}
+
 .welcome_txt {
     color: white;
     font-size: 24px;
@@ -239,7 +253,7 @@ body {
 .authorization {
     max-width: 436px;
     min-width: auto;
-    height: 442px;
+    height: min-content;
     background: black;
     border: 5px solid white;
     border-radius: 15px;
@@ -257,7 +271,7 @@ body {
 .data-b {
     max-width: 328px;
     min-width: auto;
-    height: 98px;
+    height: auto;
     margin: 44px auto;
 }
 
@@ -291,6 +305,7 @@ body {
     height: 47px;
     font-size: 18px;
     background: white;
+    margin: 0 0 10px 0;
 }
 
 .forgot_password {
@@ -303,12 +318,18 @@ body {
     padding: 9px 0;
     font-size: 18px;
     text-align: center;
-    margin: 0 auto;
     width: 211px;
     height: 45px;
     background: white;
     border-radius: 50px;
     transition: 0.5s;
+}
+
+.enter {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
 }
 
 .enter_btn:hover {
@@ -446,7 +467,7 @@ body {
 }
 
 .short_grades {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 215px;
 }
 

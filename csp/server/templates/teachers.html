@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>CSP project</title>
 </head>
 
@@ -48,13 +48,21 @@
 
         <main class="main">
             <div class="container">
-                <div class="time">
-                    <p class="title">Расписание на неделю</p>
-                    <div class="timetable">
-                        <div class="timetable_list">
-
-                            {% block timetable %} {% endblock %}
-
+                <div class="teachers_block">
+                    <p class="title">Учителя</p>
+                    <div class="teachers">
+                        <div class="teacher_item">
+                            <div class="teacher_img">
+                                <div class="teachers_img"></div>
+                                <div class="teachers_name">-</div>
+                            </div>
+                            <div class="teacher_inf">
+                                <p class="teachers_txt">-</p>
+                                <p class="teachers_txt">-</p>
+                                <a href="teacherstimetable.html">
+                                    <div class="teachers_timetable">Расписание преподавателя</div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+import calendar
 import os
 from flask import Flask, render_template, request, redirect, url_for, g, abort, flash, session
 from flask_sqlalchemy import SQLAlchemy
@@ -224,6 +225,7 @@ def Login():
     session.permanent = True
     global cur_id
     if 'users_cookies' in session:
+        cur_id = session['Users_id']
         return redirect(url_for('Main'), )
     else:
         try:
@@ -245,18 +247,22 @@ def Login():
                     return redirect(next_page)
                 except:
                     session['users_cookies'] = 1
+                    session['Users_id'] = cur_id
                     return redirect(url_for('Main'), )
 
             if not check_password_hash(user.UserPassword, password):
                 flash('Error in login procession', category='error')
                 return render_template('authorization.html')
-        return render_template('authorization.html')
+    return render_template('authorization.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
-    logout_user()
+    try:
+        session['Users_id'] = None
+    except:
+        return redirect(url_for('Login'))
     return redirect(url_for('Login'))
 
 
@@ -267,17 +273,6 @@ def Main():
     global period
     user = load_user(cur_id)
 
-    '''marks = get_marks(cur_id)
-    if not marks:
-        marks = empty_marks
-    else:
-        for i in empty_marks.keys():
-            for j in marks.values():
-                for t in marks.keys():
-                    if i == t:
-                        empty_marks[i] = j
-        marks = empty_marks'''
-
     day = str(datetime.date.today().day)
     month = str(datetime.date.today().month)
     if len(month) != 2:
@@ -287,20 +282,18 @@ def Main():
 
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
-    allMarks = db.session.query(MarksList).filter(
-        MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 7)).filter(
-        MarksList.PupilId == cur_id).all()
+    allMarks = db.session.query(MarksList).filter(MarksList.Date.between /
+                ((int(day) - cur_day), (int(day) - cur_day) + 7)).filter(MarksList.PupilId == cur_id).all()
 
     for i in empty_marks.keys():
         for j in allMarks:
             if i == (Lessons.query.filter_by(Id=j.LessonId).first()).LessonName:
                 empty_marks[i].append(j)
-    print(empty_marks)
+
     return render_template('main.html',
                            allMarks=allMarks,
                            empty_marks=empty_marks,
                            Lessons=Lessons,
-
                            period=period,
                            schedules=schedules,
                            )
@@ -317,32 +310,31 @@ def Schedule():
     period = day + "." + month
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
-    monday = str(int(period.split('.')[0]) - cur_day) + '.' + period.split('.')[1]
-    tuesday = str(int(monday.split('.')[0]) + 1) + '.' + period.split('.')[1]
-    wednesday = str(int(monday.split('.')[0]) + 2) + '.' + period.split('.')[1]
-    thursday = str(int(monday.split('.')[0]) + 3) + '.' + period.split('.')[1]
-    friday = str(int(monday.split('.')[0]) + 4) + '.' + period.split('.')[1]
-    saturday = str(int(monday.split('.')[0]) + 5) + '.' + period.split('.')[1]
-    schedules_monday = ScheduleList.query.filter_by(LessonDate=monday).all()
-    schedules_tuesday = ScheduleList.query.filter_by(LessonDate=tuesday).all()
-    schedules_wednesday = ScheduleList.query.filter_by(LessonDate=wednesday).all()
-    schedules_thursday = ScheduleList.query.filter_by(LessonDate=thursday).all()
-    schedules_friday = ScheduleList.query.filter_by(LessonDate=friday).all()
-    schedules_saturday = ScheduleList.query.filter_by(LessonDate=saturday).all()
-    print(schedules_monday, schedules_tuesday)
+
+    lessons = ScheduleList.query.filter(ScheduleList.LessonDate.between /
+                ((int(day) - cur_day), (int(day) - cur_day) + 7)).all()
+    dates = []
+    for i in lessons:
+        dates.append(i.LessonDate)
+    dates = list(set(dates))
+    dates = sorted(dates)
+
     return render_template('schedule.html',
+                           ScheduleList=ScheduleList,
+                           cur_day=cur_day,
+                           DAY=day,
+                           int=int,
+                           str=str,
                            Lessons=Lessons,
-                           schedules_monday=schedules_monday,
-                           schedules_tuesday=schedules_tuesday,
-                           schedules_wednesday=schedules_wednesday,
-                           schedules_thursday=schedules_thursday,
-                           schedules_friday=schedules_friday,
-                           schedules_saturday=schedules_saturday,)
+                           dates=dates,
+                           datetime=datetime,
+                           calendar=calendar,
+                           )
 
 @app.route('/teachers')
 @login_required
 def Teachers():
-    return 'Учителя'
+    return render_template('teachers.html')
 
 
 @app.route('/journal')
@@ -351,12 +343,14 @@ def Journal():
     Marks = []
     return render_template('journal.html',
                            user_id=str(cur_id),
-                           items=12,
+                           items=13,
                            Lessons=Lessons,
                            MarksList=MarksList,
                            MissedLessons=MissedLessons,
+                           int=int,
                            str=str,
                            len=len,
+                           sum=sum,
                            )
 
 
