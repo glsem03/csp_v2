@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="css/style.css">
     <title>CSP project</title>
 </head>
 
@@ -17,7 +17,7 @@
 
         <header class="header">
             <div class="header_container container">
-                <a class="" href="index.html">
+                <a class="" href="/timetable">
                     <div class="header_logo"></div>
                 </a>
 
@@ -48,26 +48,20 @@
 
         <main class="main">
             <div class="container">
-                <div class="grades_main">
-                    <p class="title">Ваши оценки за месяц</p>
-                    <div class="grades_block">
-                        <div class="grades_inf">
-                            <div class="grades_list">
-                                <div class="subject_number">№</div>
-                                <div class="subject_name">Предмет</div>
-                                <div class="grades">Оценки</div>
-                                <div class="lateness">Опоздания</div>
-                                <div class="omission_inf">
-                                    <div class="omission">Пропуски</div>
-                                    <div class="omission_all-diseace">
-                                        <div class="omission_all">Всего</div>
-                                        <div class="omission_diseace">По болезни</div>
+                <div class="time">
+                    <p class="title">Расписание на неделю</p>
+                    <div class="timetable">
+                        <div class="timetable_list">
+                            <div class="timetable_block">
+                                <p class="subtitle"></p>
+                                <div class="short_timetable">
+                                    <div class="timetable_line">
+                                        <div class="timetable_date"></div>
+                                        <div class="timetable_item"></div>
+                                        <div class="timetable_class"></div>
                                     </div>
                                 </div>
-                                <div class="average_score">Средний балл</div>
-                                <div class="mounth_total">Итог за месяц</div>
-                            </div> 
-                            {% block table %} {% endblock %}
+                            </div>
                         </div>
                     </div>
                 </div>

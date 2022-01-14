@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>CSP project</title>
 </head>
 
@@ -17,23 +17,23 @@
 
         <header class="header">
             <div class="header_container container">
-                <a class="" href="index.html">
+                <a class="" href="/main">
                     <div class="header_logo"></div>
                 </a>
 
                 <nav class="nav_menu menu">
                     <ul class="nav_list">
                         <li class="nav_item">
-                            <a href="timetable.html" class="item_link">Расписание</a>
+                            <a href="/timetable" class="item_link">Расписание</a>
                         </li>
                         <li class="nav_item">
-                            <a href="grades.html" class="item_link">Успеваемость</a>
+                            <a href="/journal" class="item_link">Успеваемость</a>
                         </li>
                         <li class="nav_item">
-                            <a href="literature.html" class="item_link">Литература</a>
+                            <a href="/literature" class="item_link">Литература</a>
                         </li>
                         <li class="nav_item">
-                            <a href="teachers.html" class="item_link">Учителя</a>
+                            <a href="/teachers" class="item_link">Учителя</a>
                         </li>
                     </ul>
                 </nav>
@@ -51,7 +51,19 @@
                 <div class="teachers_block">
                     <p class="title">Учителя</p>
                     <div class="teachers">
-                        <div class="teacher_item"></div>
+                        <div class="teacher_item">
+                            <div class="teacher_img">
+                                <div class="teachers_img"></div>
+                                <div class="teachers_name">-</div>
+                            </div>
+                            <div class="teacher_inf">
+                                <p class="teachers_txt">-</p>
+                                <p class="teachers_txt">-</p>
+                                <a href="teacherstimetable.html">
+                                    <div class="teachers_timetable">Расписание преподавателя</div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

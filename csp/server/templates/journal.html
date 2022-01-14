@@ -18,23 +18,28 @@
             {% endif %}
 
     {% endfor %}
-
-    {% set Marks = Marks|join(', ') %}
-
-    {% set MissedLessonsUsers = MissedLessons.query.filter(MissedLessons.UserId==id).filter(MissedLessons.IsSkippedAllLesson=='1').filter(MissedLessons.SkippedLessonId==i).all() %}
-    {% if MissedLessonsUsers %}
-        {% for y in MissedLessonsUsers %}
-            {% set l = str(len(MissedLessonsUsers)) %}
+    {% set IntMarks = [] %}
+    {% for i in Marks %}
+        {{ IntMarks.append(int(i)) or ''}}
         {% endfor %}
+    {% set midle = IntMarks | sum(attribute=None) %}
+    {% if midle != 0 %}
+        {% set end_midle = midle / len(Marks) %}
+    {% else %}
+        {% set end_midle = 0 %}
     {% endif %}
+    {% set RespecfulLessonsUsers = MissedLessons.query.filter(MissedLessons.UserId==id).filter(MissedLessons.SkipReasonTypeId==1).filter(MissedLessons.SkippedLessonId==i).all() %}
+    {% set LatenessLessonsUsers = MissedLessons.query.filter(MissedLessons.UserId==id).filter(MissedLessons.IsSkippedAllLesson=='0').filter(MissedLessons.SkippedLessonId==i).all() %}
+    {% set MissedLessonsUsers = MissedLessons.query.filter(MissedLessons.UserId==id).filter(MissedLessons.IsSkippedAllLesson=='1').filter(MissedLessons.SkippedLessonId==i).all() %}
+    {% set NMarks = Marks|join(', ') or '' %}
     <div class="grades_list">
         <div class="subject_number-inf">{{ i }}</div>
         <div class="subject_name-inf">{{ lessonName }}</div>
-        <div class="grades-inf">{{  Marks|default('', True) }}</div>
-        <div class="lateness-inf"></div>
-        <div class="omission_all-inf">{{ l }}</div>
-        <div class="omission_diseace-inf"></div>
-        <div class="average_score-inf"></div>
+        <div class="grades-inf">{{  NMarks|default('', True) }}</div>
+        <div class="lateness-inf">{{ len(LatenessLessonsUsers) }}</div>
+        <div class="omission_all-inf">{{ len(MissedLessonsUsers) }}</div>
+        <div class="omission_diseace-inf">{{ len(RespecfulLessonsUsers) }}</div>
+        <div class="average_score-inf">{{ end_midle }}</div>
         <div class="mounth_total-inf"></div>
     </div>
 
