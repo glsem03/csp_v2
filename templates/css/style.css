@@ -107,7 +107,7 @@ body {
 .header_container {
     padding: 0 15px;
     display: flex;
-    height: 120px;
+    height: 150px;
     align-items: center;
 }
 
@@ -150,7 +150,6 @@ body {
   }
 
 .nav_list {
-    flex-wrap: wrap;
     display: flex;
 }
 
@@ -163,6 +162,12 @@ body {
     }
     .header_container_aut {
         padding: 15px 15px;
+    }
+}
+
+@media (max-width: 816px){
+    .nav_list {
+        flex-wrap: wrap;
     }
 }
 
@@ -204,12 +209,46 @@ body {
     height: 74px;
     border-radius: 50px;
     transition: 0.5s;
+    position: relative;
 }
 
 .login_img:hover {
     background: url("..//img/login_white.svg") no-repeat;
 }
 
+
+.login_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 205px;
+    height: 54px;
+    color: white;
+    background: black;
+    margin: 1px auto 1px auto;
+    transition: 0.5s;
+}
+
+.login_item:hover {
+    color: black;
+    background: white;
+}
+
+.login_list {
+    width: 207px;
+    height: auto;
+    background: white;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: none;
+    
+}
+
+.login_img:hover .login_list {
+    display: block;
+    
+}
 /* Шапка */
 
 
@@ -1012,6 +1051,10 @@ body {
         width: 90%;
     }
 }
+
+/* -------------------------------------------------- */
+
+
 
 /* Мейн */
 
