@@ -204,7 +204,6 @@ body {
 }
 
 .login_img {
-    background: url("..//img/login_black.svg") no-repeat;
     width: 74px;
     height: 74px;
     border-radius: 50px;
@@ -213,6 +212,14 @@ body {
 }
 
 .login_img:hover {
+    background: url("..//img/login_white.svg") no-repeat;
+}
+
+.login_img-black {
+    background: url("..//img/login_black.svg") no-repeat;
+}
+
+.login_img-white {
     background: url("..//img/login_white.svg") no-repeat;
 }
 
@@ -242,12 +249,10 @@ body {
     top: 100%;
     right: 0;
     display: none;
-    
 }
 
-.login_img:hover .login_list {
+.login_list-active {
     display: block;
-    
 }
 /* Шапка */
 
