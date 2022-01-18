@@ -1075,5 +1075,61 @@ body {
     padding: 15px;
 }
 
+/*404*/
+.error{
+    /* background: url("../img/zoom-icon.svg") repeat; */
+    /* background-size: 30px 30px; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+}
+
+.error-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.error-content__title {
+    font-size: 72px;
+    font-weight: 700;
+}
+.error-content__subtitle {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.error-content__link {
+    background: url("../img/arrow-back.svg") no-repeat center left;
+    padding-left: 20px;
+    transition: 0.2s ease-in-out;
+}
+.error-content__link:hover {
+    margin-left: 10px;
+}
+.error-content__desc {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.error__img {
+    background: url("../img/cosmonaut.svg") no-repeat center center;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 809px) {
+    .error {
+        display: block;
+        padding: 0 15px;
+    }
+    .error__img {
+        height: 50%
+    }
+}
+
 
 
