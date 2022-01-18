@@ -2,7 +2,7 @@
 {% block teacher %}
     {% set teachers = Users.query.filter(Users.UserTypeId==3).all() %}
     {% for i in teachers %}
-        {% set f = Fernet(bytes(Users.query.filter(Users.UserId == 12344).first().Token.split('b')[1], encoding='utf-8')) %}
+        {% set f = Fernet(bytes(Users.query.filter(Users.UserId == i.UserId).first().Token.split('b')[1], encoding='utf-8')) %}
         {% set mail = f.decrypt(i.Email) %}
         <div class="teacher_item">
             <div class="teacher_img">
