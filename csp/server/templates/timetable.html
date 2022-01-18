@@ -1,73 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'timetable_base.html' %}
 
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>CSP project</title>
-</head>
+{% block timetable %}
 
-<body>
-    <div class="wrapper">
+{% for j in dates %}
+    {% set year = datetime.datetime.today().year %}
+    {% set full_date = j + '.' + str(year) %}
+    {% set workdate = datetime.datetime.strptime(full_date, "%d.%m.%Y") %}
+    {% set week_day = calendar.day_name[workdate.date().weekday()] %}
+    {% set schedules_filtred = ScheduleList.query.filter(ScheduleList.LessonDate.between((int(DAY) - cur_day), (int(DAY) - cur_day) + 6)).filter_by(LessonDate=j).all() %}
 
-        <header class="header">
-            <div class="header_container container">
-                <a class="" href="/main">
-                    <div class="header_logo"></div>
-                </a>
+    {% set subtitle = [j, ru(week_day)] %}
 
-                <nav class="nav_menu menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="/timetable" class="item_link">Расписание</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/journal" class="item_link">Успеваемость</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/literature" class="item_link">Литература</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/teachers" class="item_link">Учителя</a>
-                        </li>
-                    </ul>
-                </nav>
+    <div class="timetable_block">
+        <div class="short_timetable">
+            <p class="subtitle">{{ subtitle | join(", ") or "" }}</p>
 
-                <a href="#">
-                    <div class="login">
-                        <div class="login_img"></div>
-                    </div>
-                </a>
-            </div>
-        </header>
+            {% for i in schedules_filtred %}
 
-        <main class="main">
-            <div class="container">
-                <div class="time">
-                    <p class="title">Расписание на неделю</p>
-                    <div class="timetable">
-                        <div class="timetable_list">
 
-                            {% block timetable %} {% endblock %}
-
+                        <div class="timetable_line">
+                            <div class="timetable_date">{{ i.LessonTime.split('-')[0] }}<br>{{ i.LessonTime.split('-')[1] }}</div>
+                            <div class="timetable_item">
+                                <div class="timetable_item-name">{{ Lessons.query.filter_by(Id=i.LessonId).first().LessonName }}</div>
+                                <div class="timetable_subtitle">{{ Users.query.filter(Users.UserId==i.TeacherId).first().Name }}</div>
+                            </div>
+                            <div class="timetable_class">{{ i.Office }}</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </main>
 
-        <footer class="footer">
-            <div class="container">
-                <p class="footer_txt">Copyright by CSP @2021-2021</p>
-                <div class="footer_img"></div>
-            </div>
-        </footer>
+
+            {% endfor %}
+
+        </div>
     </div>
-</body>
-
-</html>
+{% endfor %}
+{% endblock %}

@@ -1,86 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "grades_base.html" %}
 
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>CSP project</title>
-</head>
+{% block table %}
 
-<body>
-    <div class="wrapper">
+{% set id = user_id %}
 
-        <header class="header">
-            <div class="header_container container">
-                <a class="" href="index.html">
-                    <div class="header_logo"></div>
-                </a>
+{% for i in range(1, items + 1) %}
+    {% set l = 0 %}
+    {% set Marks = [] %}
 
-                <nav class="nav_menu menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="/timetable" class="item_link">Расписание</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/journal" class="item_link">Успеваемость</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/literature" class="item_link">Литература</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#" class="item_link">Учителя</a>
-                        </li>
-                    </ul>
-                </nav>
+    {% set lessonName = (Lessons.query.filter_by(Id=i).first()).LessonName %}
+    {% set AllMarks = MarksList.query.filter_by(PupilId=id).all() %}
 
-                <a href="#">
-                    <div class="login">
-                        <div class="login_img"></div>
-                    </div>
-                </a>
-            </div>
-        </header>
+    {% for j in AllMarks %}
 
-        <main class="main">
-            <div class="container">
-                <div class="grades_main">
-                    <p class="title">Ваши оценки за месяц</p>
-                    <div class="grades_block">
-                        <div class="grades_inf">
-                            <div class="grades_list">
-                                <div class="subject_number">№</div>
-                                <div class="subject_name">Предмет</div>
-                                <div class="grades">Оценки</div>
-                                <div class="lateness">Опоздания</div>
-                                <div class="omission_inf">
-                                    <div class="omission">Пропуски</div>
-                                    <div class="omission_all-diseace">
-                                        <div class="omission_all">Всего</div>
-                                        <div class="omission_diseace">По болезни</div>
-                                    </div>
-                                </div>
-                                <div class="average_score">Средний балл</div>
-                                <div class="mounth_total">Итог за месяц</div>
-                            </div> 
-                            {% block table %} {% endblock %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+            {% if j.LessonId == i %}
+            {{ Marks.append( j.Mark ) or ""}}
+            {% endif %}
 
-        <footer class="footer">
-            <div class="container">
-                <p class="footer_txt">Copyright by CSP @2021-2021</p>
-                <div class="footer_img"></div>
-            </div>
-        </footer>
+    {% endfor %}
+    {% set IntMarks = [] %}
+    {% for i in Marks %}
+        {{ IntMarks.append(int(i)) or ''}}
+        {% endfor %}
+    {% set midle = IntMarks | sum(attribute=None) %}
+    {% if midle != 0 %}
+        {% set end_midle = midle / len(Marks) %}
+    {% else %}
+        {% set end_midle = 0 %}
+    {% endif %}
+    {% set RespecfulLessonsUsers = MissedLessons.query.filter(MissedLessons.UserId==id).filter(MissedLessons.SkipReasonTypeId==1).filter(MissedLessons.SkippedLessonId==i).all() %}
+    {% set LatenessLessonsUsers = MissedLessons.query.filter(MissedLessons.UserId==id).filter(MissedLessons.IsSkippedAllLesson=='0').filter(MissedLessons.SkippedLessonId==i).all() %}
+    {% set MissedLessonsUsers = MissedLessons.query.filter(MissedLessons.UserId==id).filter(MissedLessons.IsSkippedAllLesson=='1').filter(MissedLessons.SkippedLessonId==i).all() %}
+    {% set NMarks = Marks|join(', ') or '' %}
+    <div class="grades_list">
+        <div class="subject_number-inf">{{ i }}</div>
+        <div class="subject_name-inf">{{ lessonName }}</div>
+        <div class="grades-inf">{{  NMarks|default('', True) }}</div>
+        <div class="lateness-inf">{{ len(LatenessLessonsUsers) }}</div>
+        <div class="omission_all-inf">{{ len(MissedLessonsUsers) }}</div>
+        <div class="omission_diseace-inf">{{ len(RespecfulLessonsUsers) }}</div>
+        <div class="average_score-inf">{{ end_midle }}</div>
+        <div class="mounth_total-inf"></div>
     </div>
-</body>
 
-</html>
+{% endfor %}
+
+{% endblock %}

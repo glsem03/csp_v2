@@ -1,6 +1,11 @@
+import base64
 import calendar
 import os
-from flask import Flask, render_template, request, redirect, url_for, g, abort, flash, session
+import random
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.fernet import Fernet
+from flask import Flask, render_template, request, redirect, url_for, abort, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, logout_user, login_user, login_required, UserMixin
 from sqlalchemy import ForeignKey
@@ -16,6 +21,36 @@ def out_none(val):
         else:
             t = ''
     return val
+
+
+def sortByAlphabet(inputStr):
+    return inputStr[0]
+
+
+def ru(i):
+    if i == 'Monday':
+        i = 'Понедельник'
+        return i
+
+    if i == 'Tuesday':
+        i = 'Вторник'
+        return i
+
+    if i == 'Wednesday':
+        i = 'Среда'
+        return i
+
+    if i == 'Thursday':
+        i = 'Четверг'
+        return i
+
+    if i == 'Friday':
+        i = 'Пятница'
+        return i
+
+    if i == 'Saturday':
+        i = 'Суббота'
+        return i
 
 
 environment.DEFAULT_FILTERS['out_none'] = out_none
@@ -106,12 +141,16 @@ class UserTypes(db.Model):
     RoleName = db.Column(db.Integer(), nullable=False)
 
 
-class Users(db.Model, UserMixin):
+class Users(db.Model):
     __tablename__ = 'Users'
     UserId = db.Column(db.Integer(), unique=True, nullable=False, primary_key=True)
     UserLogin = db.Column(db.Text(), nullable=False)
     UserPassword = db.Column(db.Text(), nullable=False)
     UserTypeId = db.Column(db.Integer(), ForeignKey('UserTypes.RoleId'), nullable=False)
+    Name = db.Column(db.Text())
+    Email = db.Column(db.Text())
+    PhoneNumber = db.Column(db.Text())
+    Token = db.Column()
 
     def is_active(self):
         return True
@@ -225,8 +264,10 @@ def Login():
     session.permanent = True
     global cur_id
     if 'users_cookies' in session:
+
         cur_id = session['Users_id']
         return redirect(url_for('Main'), )
+
     else:
         try:
             logout_user()
@@ -252,18 +293,18 @@ def Login():
 
             if not check_password_hash(user.UserPassword, password):
                 flash('Error in login procession', category='error')
-                return render_template('authorization.html')
-    return render_template('authorization.html')
+                return render_template('authorization_base.html')
+    return render_template('authorization_base.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     try:
-        session['Users_id'] = None
+        del session['Users_id']
+        return redirect(url_for('Login'))
     except:
         return redirect(url_for('Login'))
-    return redirect(url_for('Login'))
 
 
 @app.route('/main', methods=['POST', 'GET'])
@@ -271,6 +312,7 @@ def logout():
 def Main():
     global cur_id
     global period
+
     user = load_user(cur_id)
 
     day = str(datetime.date.today().day)
@@ -282,20 +324,21 @@ def Main():
 
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
-    allMarks = db.session.query(MarksList).filter(MarksList.Date.between /
-                ((int(day) - cur_day), (int(day) - cur_day) + 7)).filter(MarksList.PupilId == cur_id).all()
+    allMarks = db.session.query(MarksList).filter(MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 6)).filter(MarksList.PupilId == cur_id).all()
 
     for i in empty_marks.keys():
         for j in allMarks:
             if i == (Lessons.query.filter_by(Id=j.LessonId).first()).LessonName:
                 empty_marks[i].append(j)
 
-    return render_template('main.html',
+    return render_template('index.html',
                            allMarks=allMarks,
                            empty_marks=empty_marks,
                            Lessons=Lessons,
                            period=period,
                            schedules=schedules,
+                           ru=ru,
+                           Users=Users,
                            )
 
 
@@ -311,15 +354,14 @@ def Schedule():
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
 
-    lessons = ScheduleList.query.filter(ScheduleList.LessonDate.between /
-                ((int(day) - cur_day), (int(day) - cur_day) + 7)).all()
+    lessons = ScheduleList.query.filter(ScheduleList.LessonDate.between((int(day) - cur_day), (int(day) - cur_day) + 6)).all()
     dates = []
     for i in lessons:
         dates.append(i.LessonDate)
     dates = list(set(dates))
     dates = sorted(dates)
 
-    return render_template('schedule.html',
+    return render_template('timetable.html',
                            ScheduleList=ScheduleList,
                            cur_day=cur_day,
                            DAY=day,
@@ -329,19 +371,16 @@ def Schedule():
                            dates=dates,
                            datetime=datetime,
                            calendar=calendar,
+                           Users=Users,
+                           ru=ru,
                            )
-
-@app.route('/teachers')
-@login_required
-def Teachers():
-    return render_template('teachers.html')
 
 
 @app.route('/journal')
 @login_required
 def Journal():
     Marks = []
-    return render_template('journal.html',
+    return render_template('grades.html',
                            user_id=str(cur_id),
                            items=13,
                            Lessons=Lessons,
@@ -352,6 +391,79 @@ def Journal():
                            len=len,
                            sum=sum,
                            )
+
+
+@app.route('/teachers')
+@login_required
+def teachers():
+
+    return render_template('teachers.html', Users=Users,
+                           Fernet=Fernet,
+                           bytes=bytes,
+    )
+
+
+@app.route('/ttimetable/<int:uid>')
+@login_required
+def tTimetable(uid):
+    cur_day = datetime.datetime.today().isoweekday()
+    cur_day -= 1
+    day = str(datetime.date.today().day)
+    lessons = ScheduleList.query.filter(ScheduleList.LessonDate.between((int(day) - cur_day), (int(day) - cur_day) + 6)).filter(ScheduleList.TeacherId==uid).all()
+    t_dates = []
+    for i in lessons:
+        t_dates.append(i.LessonDate)
+    t_dates = list(set(t_dates))
+    t_dates = sorted(t_dates)
+    return render_template('teacherstimetable.html',
+                           uid=uid,
+                           Groups=Groups,
+                           ScheduleList=ScheduleList,
+                           cur_day=cur_day,
+                           DAY=day,
+                           int=int,
+                           str=str,
+                           Lessons=Lessons,
+                           t_dates=t_dates,
+                           datetime=datetime,
+                           calendar=calendar,
+                           ru=ru,
+                           )
+
+
+@app.route('/sicret-reg', methods=['GET', 'POST'])
+@login_required
+def sr():
+    if request.method == 'POST':
+        login = request.form.get('username')
+        pas = request.form.get('password')
+        email = request.form.get('email')
+        number = request.form.get('number')
+        utp = request.form.get('utp')
+        salt = os.urandom(16)
+        kdf = PBKDF2HMAC(algorithm=hashes.SHA256(),
+                         length=32,
+                         salt=salt,
+                         iterations=100000,
+                         )
+        key = base64.urlsafe_b64encode(kdf.derive(bytes(pas, encoding='utf-8')))
+        f = Fernet(key)
+        print(Fernet(bytes(Users.query.filter(Users.UserId == 12344).first().Token.split('b')[1], encoding='utf-8')))
+
+        if number:
+            user = Users(UserId=random.randint(1, 16999), UserLogin=login, UserPassword=generate_password_hash(pas), UserTypeId=utp, Email=f.encrypt(bytes(email, encoding='utf-8')), PhoneNumber=f.encrypt(bytes(number, encoding='utf-8')), Token=str(key))
+        else:
+            user = Users(UserId=random.randint(1, 16999), UserLogin=login, UserPassword=generate_password_hash(pas), UserTypeId=utp, Email=f.encrypt(bytes(email, encoding='utf-8')), Token=str(key))
+        db.session.add(user)
+        db.session.commit()
+
+    return render_template('sr.html')
+
+
+@app.route('/literature')
+@login_required
+def literature():
+    return render_template('literature.html')
 
 
 @app.route('/forgotpass')

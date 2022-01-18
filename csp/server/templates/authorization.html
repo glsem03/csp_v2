@@ -1,55 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>CSP project</title>
-</head>
-
-<body>
-    <div class="wrapper">
-
-        <header class="header">
-            <div class="header_container_aut container">
-                <a class="" href="#">
-                    <div class="header_logo_aut"></div>
-                </a>
-            </div>
-        </header>
-
-        <main class="main">
-            <div class="container">
-                <div class="authorization_block">
-                    <p class="welcome_txt">Добро пожаловать!</p>
-                    <p class="welcome_txt">Пожалуйста авторизуйтесь</p>
-                    <p class="wrong_password">Пароль или логин неверный</p>
-                    <div class="authorization">
-                        <form method="post">
-                        <div class="data">
-                            <p class="enter_data">Введите ваш логин</p>
-                            <div class="data_field_block"><input class="data_field" type="text" name="username" id="username"></div>
-                        </div>
-                        <div class="data-b">
-                            <p class="enter_data-b">Введите ваш пароль</p>
-                            <div class="data_field_block"><input class="data_field" type="text" name="password" id="password"></div>
-                            <label class="remember_me">Запомнить меня
-                                <input class="remember_checkbox" type="checkbox">
-                            </label>
-                            <a href="/forgotpass"><p class="forgot_password">Забыли пароль?</p></a>
-                        </div>
-                            <div class="enter"><input type="submit" class="enter_btn" value="Войти"></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </main>
-
+{% extends 'authorization_base.html' %}
+{% block Main %}
+<form method="post">
+    <div class="data">
+        <p class="enter_data">Введите ваш логин</p>
+        <div class="data_field_block"><input class="data_field" type="text" name="username" id="username"></div>
     </div>
-</body>
-
-</html>
+    <div class="data-b">
+        <p class="enter_data-b">Введите ваш пароль</p>
+        <div class="data_field_block"><input class="data_field" type="text" name="password" id="password"></div>
+        <a href="/forgotpass"><p class="forgot_password">Забыли пароль?</p></a>
+    </div>
+    <button class="enter_button"><input type="submit" class="enter_btn" value="Войти"></button>
+</form>
+{% endblock %}

@@ -107,7 +107,7 @@ body {
 .header_container {
     padding: 0 15px;
     display: flex;
-    height: 120px;
+    height: 150px;
     align-items: center;
 }
 
@@ -150,7 +150,6 @@ body {
   }
 
 .nav_list {
-    flex-wrap: wrap;
     display: flex;
 }
 
@@ -163,6 +162,12 @@ body {
     }
     .header_container_aut {
         padding: 15px 15px;
+    }
+}
+
+@media (max-width: 816px){
+    .nav_list {
+        flex-wrap: wrap;
     }
 }
 
@@ -204,12 +209,46 @@ body {
     height: 74px;
     border-radius: 50px;
     transition: 0.5s;
+    position: relative;
 }
 
 .login_img:hover {
     background: url("../static/img/login_white.svg") no-repeat;
 }
 
+
+.login_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 205px;
+    height: 54px;
+    color: white;
+    background: black;
+    margin: 1px auto 1px auto;
+    transition: 0.5s;
+}
+
+.login_item:hover {
+    color: black;
+    background: white;
+}
+
+.login_list {
+    width: 207px;
+    height: auto;
+    background: white;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: none;
+    
+}
+
+.login_img:hover .login_list {
+    display: block;
+    
+}
 /* Шапка */
 
 
@@ -220,20 +259,6 @@ body {
     max-width: 436px;
     min-width: auto;
     height: 596px;
-}
-
-.remember_me {
-    color: white;
-    font-size: 14px;
-    align-items: center;
-    margin: 20px 0 0 0;
-}
-
-.remember_checkbox {
-    float: left;
-    width: 15px;
-    height: 15px;
-    margin: 8px 10px 0 auto;
 }
 
 .welcome_txt {
@@ -253,7 +278,7 @@ body {
 .authorization {
     max-width: 436px;
     min-width: auto;
-    height: min-content;
+    height: 442px;
     background: black;
     border: 5px solid white;
     border-radius: 15px;
@@ -271,7 +296,7 @@ body {
 .data-b {
     max-width: 328px;
     min-width: auto;
-    height: auto;
+    height: 98px;
     margin: 44px auto;
 }
 
@@ -305,7 +330,6 @@ body {
     height: 47px;
     font-size: 18px;
     background: white;
-    margin: 0 0 10px 0;
 }
 
 .forgot_password {
@@ -318,18 +342,17 @@ body {
     padding: 9px 0;
     font-size: 18px;
     text-align: center;
+    margin: 0 auto;
     width: 211px;
     height: 45px;
     background: white;
     border-radius: 50px;
     transition: 0.5s;
+    margin: 0 auto;
 }
 
-.enter {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-
+.enter_button {
+    border-radius: 50px;
 }
 
 .enter_btn:hover {
@@ -552,11 +575,18 @@ body {
     width: 323px;
     height: 101px;
     color: white;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin: 0 0 1px 0;
+    padding: 15px 15px;
+    text-align: left;
+}
+
+.timetable_item-name {
+    margin: 0 auto;
+}
+
+.timetable_subtitle {
+    margin: 0 auto;
+    color: gray;
 }
 
 @media (max-width: 1680px){
@@ -607,15 +637,14 @@ body {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .timetable_block {
     width: 32.739%;
     height: auto;
-    margin-right: 15px;
-    margin-bottom: 81px;
+    margin: 0 5px 81px 5px;
 }
+
 
 .timetable_main {
     background: black;
@@ -935,32 +964,6 @@ body {
     margin: 34px;
 }
 
-.lit_img {
-    background: white;
-    width: 268px;
-    height: 370px;
-}
-
-.lit_name {
-    color: white;
-    width: 268px;
-}
-
-
-
-/* Мейн */
-
-/* Футер */
-
-.footer {
-    font-size: 14px;
-    margin-top: 240px;
-    width: 100%;
-    height: 120px;
-    background: white;
-    padding: 15px;
-}
-
 /*404*/
 .error{
     /* background: url("../img/zoom-icon.svg") repeat; */
@@ -989,7 +992,7 @@ body {
     margin-bottom: 5px;
 }
 .error-content__link {
-    background: url("../img/arrow-back.svg") no-repeat center left;
+    background: url("../static/img/arrow-back.svg") no-repeat center left;
     padding-left: 20px;
     transition: 0.2s ease-in-out;
 }
@@ -1002,7 +1005,7 @@ body {
 }
 
 .error__img {
-    background: url("../img/cosmonaut.svg") no-repeat center center;
+    background: url("../static/img/cosmonaut.svg") no-repeat center center;
     width: 100%;
     height: 100%;
 }
@@ -1016,5 +1019,117 @@ body {
         height: 50%
     }
 }
+
+
+.lit_img {
+    background: white;
+    width: 268px;
+    height: 370px;
+}
+
+.lit_name {
+    color: white;
+    width: 268px;
+}
+
+
+/* --------------------------------------------------------------------- */
+
+.teachers_block {
+    width: 100%;
+    text-align: center;
+}
+
+.teachers {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.teacher_item {
+    display: flex;
+    height: auto;
+    width: 691px;
+    margin: 0 auto 75px auto;
+}
+
+.teacher_img {
+    background: white;
+    width: 38.785%;
+    height: min-content;
+}
+
+.teacher_inf {
+    background: white;
+    width: 59.049%;
+    height: 291px;
+    margin: 0 0 0 15px;
+}
+
+.teachers_txt {
+    margin: 20px auto 20px auto;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.teachers_timetable {
+    background: black;
+    color: white;
+    width: 90.199%;
+    height: 43px;
+    margin: 130px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.teachers_img {
+    height: 296px;
+}
+
+@media (max-width: 724px){
+    .teacher_item {
+        width: 100%;
+        display: block;
+    }
+
+    .teacher_img {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .teacher_inf {
+        margin: 0 auto;
+        width: 80%;
+    }
+}
+
+@media (max-width: 635px){
+    .teacher_img {
+        width: 70%;
+    }
+
+    .teacher_inf {
+        width: 90%;
+    }
+}
+
+/* -------------------------------------------------- */
+
+
+
+/* Мейн */
+
+/* Футер */
+
+.footer {
+    font-size: 14px;
+    margin-top: 240px;
+    width: 100%;
+    height: 120px;
+    background: white;
+    padding: 15px;
+}
+
 
 

@@ -1,103 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'index_base.html' %}
 
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>CSP project</title>
-</head>
+{% block Marks %}
+{% for i in empty_marks.keys() %}
+    {% if not empty_marks[i] == [] %}
+        {% set lessonName = i %}
+        {% set marks = empty_marks[lessonName] %}
+        <div class="item-grades-inf_line">
+            <div class="short_item-grades-inf">{{ lessonName }}</div>
+            <div class="short_item-grades-inf">{{ marks|join(' ,') }}</div>
+        </div>
+        {{marks.clear() or "" }}
+    {% endif %}
+{% endfor %}
+{% endblock %}
 
-<body>
-    <div class="wrapper">
-
-        <header class="header">
-            <div class="header_container container">
-                <a class="" href="index.html">
-                    <div class="header_logo"></div>
-                </a>
-
-                <nav class="nav_menu menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="/timetable" class="item_link">Расписание</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/journal" class="item_link">Успеваемость</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/literature" class="item_link">Литература</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/teachers" class="item_link">Учителя</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <a href="#">
-                    <div class="login">
-                        <div class="login_img"></div>
-                    </div>
-                </a>
+{% block Schedule %}
+    {% for i in schedules %}
+        <div class="timetable_line">
+            <div class="timetable_date">{{ i.LessonTime.split('-')[0] }}<br>{{ i.LessonTime.split('-')[1] }}</div>
+            <div class="timetable_item">
+                <div class="timetable_item-name">{{ (Lessons.query.filter_by(Id=i.LessonId).first()).LessonName }}</div>
+                <div class="timetable_subtitle">{{ Users.query.filter(Users.UserId==i.TeacherId).first().Name }}</div>
             </div>
-        </header>
-
-        <main class="main">
-            <div class="container">
-                <div class="news">
-                    <div class="last_news">
-                        <p class="title">Последние интересные события</p>
-                        <div class="last_news_block">
-                            <div class="last_news_img"></div>
-                            <div class="last_news_txt">С 13 по 16 декабря сразу в трех центрах проведения
-                                демонстрационного экзамена, аккредитованных по стандарту Ворлдскиллс Россия, созданных
-                                на базе колледжа, состоялся демонстрационный экзамен.</div>
-                        </div>
-                    </div>
-                    <div class="vk_news">
-                        <p class="title">Узнайте больше в группе ВК</p>
-                        <div class="vk_news_block">
-                            <div class="vk_block"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="short_inf">
-                    <p class="title">Сводные данные недели</p>
-                    <div class="short_inf_block">
-                        <div class="inf_block">
-                            <p class="subtitle">Ваши оценки за неделю</p>
-                            <div class="short_grades">
-                                <div class="item-grades_line">
-                                    <div class="short_item-grades">Предметы</div>
-                                    <div class="short_item-grades">Оценки</div>
-                                </div>
-                                {% block Marks %} {% endblock %}
-                            </div>
-                        </div>
-                        <div class="inf_block">
-                            <p class="subtitle">Расписание на {{ period }}</p>
-                            <div class="short_timetable">
-                                <div class="short_timetable">
-                                    {% block Schedule %} {% endblock %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <div class="container">
-                <p class="footer_txt">Copyright by CSP @2021-2021</p>
-                <div class="footer_img"></div>
-            </div>
-        </footer>
-    </div>
-</body>
-
-</html>
+            <div class="timetable_class">{{ i.Office }}</div>
+        </div>
+    {% endfor %}
+{% endblock %}

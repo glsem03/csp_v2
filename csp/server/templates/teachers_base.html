@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>CSP project</title>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <header class="header">
+            <div class="header_container container">
+                <a class="" href="/main">
+                    <div class="header_logo"></div>
+                </a>
+
+                <nav class="nav_menu menu">
+                    <ul class="nav_list">
+                        <li class="nav_item">
+                            <a href="/timetable" class="item_link">Расписание</a>
+                        </li>
+                        <li class="nav_item">
+                            <a href="/journal" class="item_link">Успеваемость</a>
+                        </li>
+                        <li class="nav_item">
+                            <a href="/literature" class="item_link">Литература</a>
+                        </li>
+                        <li class="nav_item">
+                            <a href="/teachers" class="item_link">Учителя</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="login">
+                    <div class="login_img">
+                         <div class="login_list">
+                             <div class="login_item"><a href="">Сменить пароль</a></div>
+                             <div class="login_item"><a href="/logout">Выйти из аккаунта</a></div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <div class="teachers_block">
+                    <p class="title">Учителя</p>
+                    <div class="teachers">
+                        {% block teacher %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p class="footer_txt">Copyright by CSP @2021-2021</p>
+                <div class="footer_img"></div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

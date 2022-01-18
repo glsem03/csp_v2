@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>CSP project</title>
 </head>
 
@@ -15,7 +15,7 @@
     <div class="wrapper">
 
         <header class="header">
-            <div class="header_container container">
+            <div class="header_container_aut container">
                 <a class="" href="#">
                     <div class="header_logo_aut"></div>
                 </a>
@@ -25,17 +25,11 @@
         <main class="main">
             <div class="container">
                 <div class="authorization_block">
-                    <p class="welcome_txt">Восстановление пароля</p>
+                    <p class="welcome_txt">Добро пожаловать!</p>
+                    <p class="welcome_txt">Пожалуйста авторизуйтесь</p>
+                    <p class="wrong_password">Пароль или логин неверный</p>
                     <div class="authorization">
-                        <div class="data">
-                            <p class="enter_data">Введите ваш новый пароль</p>
-                            <div class="data_field_block"><input class="data_field" type="text" name="" id=""></div>
-                        </div>
-                        <div class="data-b">
-                            <p class="enter_data-b">Подтвердите ваш пароль</p>
-                            <div class="data_field_block"><input class="data_field" type="text" name="" id=""></div>
-                        </div>
-                        <a href="authorization_base.html"><div class="enter_btn">Сменить пароль</div></a>
+                        {% block Main %} {% endblock %}
                     </div>
                 </div>
             </div>

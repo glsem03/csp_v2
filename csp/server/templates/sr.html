@@ -1,0 +1,26 @@
+{% extends 'authorization_base.html' %}
+{% block Main %}
+<form method="post">
+    <div class="data">
+        <p class="enter_data">Введите ваш логин</p>
+        <div class="data_field_block"><input class="data_field" type="text" name="username" id="username"></div>
+    </div>
+    <div class="data-b">
+        <p class="enter_data-b">Введите ваш пароль</p>
+        <div class="data_field_block"><input class="data_field" type="text" name="password" id="password"></div>
+    </div>
+    <div class="data">
+        <p class="enter_data">Введите ваш email</p>
+        <div class="data_field_block"><input class="data_field" type="text" name="email" id="email"></div>
+    </div>
+    <div class="data-b">
+        <p class="enter_data-b">Введите ваш typeid</p>
+        <div class="data_field_block"><input class="data_field" type="text" name="utp" id="utp"></div>
+    </div>
+    <div class="data">
+        <p class="enter_data">Введите ваш номер</p>
+        <div class="data_field_block"><input class="data_field" type="text" name="number" id="number"></div>
+    </div>
+    <button class="enter_button"><input type="submit" class="enter_btn" value="подтвердить"></button>
+</form>
+{% endblock %}
