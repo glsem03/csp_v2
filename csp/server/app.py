@@ -196,7 +196,7 @@ class Lessons(db.Model):
     LessonName = db.Column(db.Text(), nullable=False, primary_key=True)
 
     def __repr__(self):
-        return 'LessonId %r>' % self.Id
+        return 'LessonId %r>' % (self.Id)
 
 
 class MarksList(db.Model):
@@ -243,30 +243,15 @@ class ScheduleList(db.Model):
         return self.LessonDate
 
 
-class Offices(db.Model):
-    __tablename__ = 'Offices'
-    Audience = db.Column(db.Text(), primary_key=True, nullable=False)
-
-    def __repr__(self):
-        return self.Audience
-
-
-class Library(db.Model):
-    __tablename__ = 'Library'
-    BookId = db.Column(db.Integer(), nullable=False, primary_key=True, unique=True)
-    BookName = db.Column(db.Text(), nullable=False)
-    BookLink = db.Column(db.Text(), nullable=False, unique=True)
-    ImgLink = db.Column(db.Text())
-
-    def __repr__(self):
-        return f'{self.BookId}, {self.BookName}'
-
-
 def filter_suppress_none(val):
     if not val is None:
         return val
     else:
         return ''
+
+
+class Offices(db.Model):
+    Audience = db.Column(db.Text(), primary_key=True, nullable=False)
 
 
 @login_manager.user_loader
@@ -278,9 +263,11 @@ def load_user(UserId):
 def Login():
     session.permanent = True
     global cur_id
-    if 'users_cookies' in session and session['users_cookies'] == 1:
+    if 'users_cookies' in session:
+
         cur_id = session['Users_id']
         return redirect(url_for('Main'), )
+
     else:
         try:
             logout_user()
@@ -300,23 +287,21 @@ def Login():
                 try:
                     return redirect(next_page)
                 except:
-                    if remember:
-                        session['users_cookies'] = 1
-                        session['Users_id'] = cur_id
+                    session['users_cookies'] = 1
+                    session['Users_id'] = cur_id
                     return redirect(url_for('Main'), )
 
             if not check_password_hash(user.UserPassword, password):
                 flash('Error in login procession', category='error')
-                return render_template('authorization.html')
-    return render_template('authorization.html')
+                return render_template('authorization_base.html')
+    return render_template('authorization_base.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     try:
-        session['users_cookies'] = 2
-        logout_user()
+        del session['Users_id']
         return redirect(url_for('Login'))
     except:
         return redirect(url_for('Login'))
@@ -339,9 +324,7 @@ def Main():
 
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
-    allMarks = db.session.query(MarksList).filter(
-        MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 6)).filter(
-        MarksList.PupilId == cur_id).all()
+    allMarks = db.session.query(MarksList).filter(MarksList.Date.between((int(day) - cur_day), (int(day) - cur_day) + 6)).filter(MarksList.PupilId == cur_id).all()
 
     for i in empty_marks.keys():
         for j in allMarks:
@@ -371,8 +354,7 @@ def Schedule():
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
 
-    lessons = ScheduleList.query.filter(
-        ScheduleList.LessonDate.between((int(day) - cur_day), (int(day) - cur_day) + 6)).all()
+    lessons = ScheduleList.query.filter(ScheduleList.LessonDate.between((int(day) - cur_day), (int(day) - cur_day) + 6)).all()
     dates = []
     for i in lessons:
         dates.append(i.LessonDate)
@@ -414,10 +396,11 @@ def Journal():
 @app.route('/teachers')
 @login_required
 def teachers():
+
     return render_template('teachers.html', Users=Users,
                            Fernet=Fernet,
                            bytes=bytes,
-                           )
+    )
 
 
 @app.route('/ttimetable/<int:uid>')
@@ -426,9 +409,7 @@ def tTimetable(uid):
     cur_day = datetime.datetime.today().isoweekday()
     cur_day -= 1
     day = str(datetime.date.today().day)
-    lessons = ScheduleList.query.filter(
-        ScheduleList.LessonDate.between((int(day) - cur_day), (int(day) - cur_day) + 6)).filter(
-        ScheduleList.TeacherId == uid).all()
+    lessons = ScheduleList.query.filter(ScheduleList.LessonDate.between((int(day) - cur_day), (int(day) - cur_day) + 6)).filter(ScheduleList.TeacherId==uid).all()
     t_dates = []
     for i in lessons:
         t_dates.append(i.LessonDate)
@@ -470,39 +451,19 @@ def sr():
         print(Fernet(bytes(Users.query.filter(Users.UserId == 12344).first().Token.split('b')[1], encoding='utf-8')))
 
         if number:
-            user = Users(UserId=random.randint(1, 16999), UserLogin=login, UserPassword=generate_password_hash(pas),
-                         UserTypeId=utp, Email=f.encrypt(bytes(email, encoding='utf-8')),
-                         PhoneNumber=f.encrypt(bytes(number, encoding='utf-8')), Token=str(key))
+            user = Users(UserId=random.randint(1, 16999), UserLogin=login, UserPassword=generate_password_hash(pas), UserTypeId=utp, Email=f.encrypt(bytes(email, encoding='utf-8')), PhoneNumber=f.encrypt(bytes(number, encoding='utf-8')), Token=str(key))
         else:
-            user = Users(UserId=random.randint(1, 16999), UserLogin=login, UserPassword=generate_password_hash(pas),
-                         UserTypeId=utp, Email=f.encrypt(bytes(email, encoding='utf-8')), Token=str(key))
+            user = Users(UserId=random.randint(1, 16999), UserLogin=login, UserPassword=generate_password_hash(pas), UserTypeId=utp, Email=f.encrypt(bytes(email, encoding='utf-8')), Token=str(key))
         db.session.add(user)
         db.session.commit()
 
     return render_template('sr.html')
 
 
-@app.route('/literature', methods=['POST', 'GET'])
+@app.route('/literature')
 @login_required
 def literature():
-    return render_template('literature.html',
-                           Library=Library,
-                           )
-
-
-@app.route("/literature/filtered", methods=['POST', 'GET'])
-@login_required
-def filter():
-    if request.method == 'POST':
-        name = request.form.get('BookName')
-        return render_template('literaturef.html',
-                                Library=Library,
-                                Name=name.lower()
-                               )
-    else:
-        return render_template('literaturef.html',
-                               Library=Library,
-                               Name='')
+    return render_template('literature.html')
 
 
 @app.route('/forgotpass')
@@ -513,11 +474,6 @@ def Forgotpass():
 @app.errorhandler(404)
 def pageNotFound(error):
     return render_template('page404.html', title='Станица не найдена :(')
-
-
-@app.errorhandler(500)
-def pageNotFound(error):
-    return render_template('page404.html', title='Что-то пошло не так.. :(')
 
 
 @app.after_request
