@@ -243,15 +243,27 @@ class ScheduleList(db.Model):
         return self.LessonDate
 
 
+class Offices(db.Model):
+    __tablename__ = 'Offices'
+    Audience = db.Column(db.Text(), primary_key=True, nullable=False)
+
+
+class Library(db.Model):
+    __tablename__ = 'Library'
+    BookId = db.Column(db.Integer(), primary_key=True, unique=True, nullable=False)
+    BookName = db.Column(db.Text(), nullable=False)
+    BookLink = db.Column(db.Text(), unique=True, nullable=False)
+    ImgLink = db.Column(db.Text())
+
+    def __repr__(self):
+        return f'{self.BookId}, {self.BookName}'
+
+
 def filter_suppress_none(val):
     if not val is None:
         return val
     else:
         return ''
-
-
-class Offices(db.Model):
-    Audience = db.Column(db.Text(), primary_key=True, nullable=False)
 
 
 @login_manager.user_loader
@@ -294,7 +306,7 @@ def Login():
             if not check_password_hash(user.UserPassword, password):
                 flash('Error in login procession', category='error')
                 return render_template('authorization_base.html')
-    return render_template('authorization_base.html')
+    return render_template('authorization.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -460,10 +472,21 @@ def sr():
     return render_template('sr.html')
 
 
-@app.route('/literature')
+@app.route('/literature', methods=['POST', 'GET'])
 @login_required
 def literature():
-    return render_template('literature.html')
+    return render_template('literature.html', Library=Library)
+
+
+@app.route('/literature_filtered', methods=['POST', 'GET'])
+@login_required
+def literaturef():
+    if request.method == 'POST':
+        Name = request.form.get('BookName')
+        return render_template('literaturef.html', Name=Name,
+                               Library=Library)
+    return render_template('literaturef.html', Name=None,
+                           Library=Library)
 
 
 @app.route('/forgotpass')

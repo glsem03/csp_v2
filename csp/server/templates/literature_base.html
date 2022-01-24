@@ -51,14 +51,11 @@
             <div class="container">
                 <div class="literature_block">
                     <p class="title">Литература</p>
-                    <form method="post" autocomplete="off">
+
+                    <form method="post" action="/literature_filtered" autocomplete="off">
                         <div class="search_field">
                             <input class="search" type="text" name="BookName" id="BookName" placeholder="Введите название">
-                            <button type="submit">
-                                <a href="/literature/filtered">
-                                    <div class="search_btn"></div>
-                                </a>
-                            </button>
+                            <button class="search_btn" type="submit"></button>
                         </div>
                     </form>
 
