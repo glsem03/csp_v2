@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?169"></script>
     <title>CSP project</title>
 </head>
 
@@ -64,7 +65,9 @@
                     <div class="vk_news">
                         <p class="title">Узнайте больше в группе ВК</p>
                         <div class="vk_news_block">
-                            <div class="vk_block"></div>
+                            <div class="vk_block">
+                                <div id="vk_groups"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,6 +104,9 @@
             </div>
         </footer>
     </div>
+    <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 4, height: "400"}, 8414632);
+    </script>
 </body>
 
 </html>
