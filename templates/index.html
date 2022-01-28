@@ -8,7 +8,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?169"></script>
     <title>CSP project</title>
 </head>
 
@@ -24,7 +25,7 @@
                 <nav class="nav_menu menu">
                     <ul class="nav_list">
                         <li class="nav_item">
-                            <a href="/timetable" class="item_link">Расписание</a>
+                            <a href="timetable.html" class="item_link">Расписание</a>
                         </li>
                         <li class="nav_item">
                             <a href="/journal" class="item_link">Успеваемость</a>
@@ -64,7 +65,10 @@
                     <div class="vk_news">
                         <p class="title">Узнайте больше в группе ВК</p>
                         <div class="vk_news_block">
-                            <div class="vk_block"></div>
+                            <div id="vk_groups"></div>
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 4, width: "auto", height: "550", color3: '000000'}, 8414632);
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -78,17 +82,26 @@
                                     <div class="short_item-grades">Предметы</div>
                                     <div class="short_item-grades">Оценки</div>
                                 </div>
-                                {% block Marks %} {% endblock %}
                             </div>
                         </div>
                         <div class="inf_block">
                             <p class="subtitle">Расписание на {{ period }}</p>
-                            <div class="short_timetable">
+                            <div class="short_timetable_block">
+                                <p class="subtitle"></p>
                                 <div class="short_timetable">
-                                    {% block Schedule %} {% endblock %}
+                                    <div class="timetable_line">
+                                        <div class="timetable_date">-</div>
+                                        <div class="timetable_item">
+                                            <div class="timetable_item-name">Математика</div>
+                                            <div class="timetable_subtitle">Васечко В.Н.</div>
+                                        </div>
+                                        <div class="timetable_class">-</div>
+                                    </div>
                                 </div>
                             </div>
+                            
                         </div>
+                        
                     </div>
                 </div>
             </div>
