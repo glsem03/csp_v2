@@ -1,1 +1,0 @@
-#<script src = "{{ url_for('static', filename = 'js/file.js') }}"><script>
