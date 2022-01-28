@@ -243,7 +243,7 @@ def load_user(UserId):
 def Login():
     session.permanent = True
     global cur_id
-    if 'users_cookies' in session:
+    if 'users_cookies' in session and session['users_cookies'] == 1:
 
         cur_id = session['Users_id']
         return redirect(url_for('Main'), )
@@ -267,8 +267,9 @@ def Login():
                 try:
                     return redirect(next_page)
                 except:
-                    session['users_cookies'] = 1
-                    session['Users_id'] = cur_id
+                    if remember:
+                        session['users_cookies'] = 1
+                        session['Users_id'] = cur_id
                     return redirect(url_for('Main'), )
 
             if not check_password_hash(user.UserPassword, password):
@@ -281,7 +282,8 @@ def Login():
 @login_required
 def logout():
     try:
-        del session['Users_id']
+        session['users_cookies'] = 2
+        logout_user()
         return redirect(url_for('Login'))
     except:
         return redirect(url_for('Login'))
