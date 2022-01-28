@@ -1,32 +1,30 @@
+#  base imports
 import base64
 import calendar
 import os
 import random
+import datetime
+
+#  cryptography
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.fernet import Fernet
+
+#  flask
 from flask import Flask, render_template, request, redirect, url_for, abort, flash, session
+
+#  flask sqlalchemy
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, logout_user, login_user, login_required, UserMixin
 from sqlalchemy import ForeignKey
+
+#  flask login
+from flask_login import LoginManager, logout_user, login_user, login_required
+
+#  security
 from werkzeug.security import generate_password_hash, check_password_hash
-import datetime
-from jinja2 import environment
 
 
-def out_none(val):
-    for t in val:
-        if not t is None or t != 'None' or t != '' or t != 'none':
-            t = t
-        else:
-            t = ''
-    return val
-
-
-def sortByAlphabet(inputStr):
-    return inputStr[0]
-
-
+#  translate function
 def ru(i):
     if i == 'Monday':
         i = 'Понедельник'
@@ -53,73 +51,7 @@ def ru(i):
         return i
 
 
-environment.DEFAULT_FILTERS['out_none'] = out_none
-
-# session.modified = True
-cur_id = int
-period = str
-
-empty_marks = {
-    "Математика": [],
-    "Физика": [],
-    "Астрономия": [],
-    "Физкультура": [],
-    "Информатика": [],
-    "Английский Язык": [],
-    "Русский Язык": [],
-    "История": [],
-    "Обществознание": [],
-    "Биология": [],
-    "Литература": [],
-    "Обж": []
-}
-# !config info!
-SECRET_KEY = 'so-so-so-so-so-difficult-key'
-DATABASE = '/csp/server/nkedb.db'
-DEBUG = True
-
-app = Flask(__name__)
-app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nkedb.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'nkedb.db')))
-app.config['SECRET_KEY'] = '3e301b1682e2833089377a8c440e19416ac7f6c9'
-app.permanent_session_lifetime = datetime.timedelta(days=7)
-
-db = SQLAlchemy(app)
-
-login_manager = LoginManager(app)
-
-
-def get_lessons(*name):
-    list_of_lessons = []
-    for i in name:
-        lesson = Lessons.query.filter_by(LessonName=i).first()
-        list_of_lessons.append(lesson)
-        print(list_of_lessons, lesson)
-    return list_of_lessons
-
-
-def get_marks(id):
-    marks = []
-    iter = 0
-    while True:
-        iter += 1
-        try:
-            mark = MarksList.query.filter_by(Id=iter).first()
-            if mark.PupilId == id:
-                l = Lessons.query.filter_by(Id=mark.LessonId).first()
-                marks.append(l.LessonName)
-                marks.append(mark.Mark)
-        except:
-            break
-    try:
-        dict = {marks[i]: marks[i + 1] for i in range(0, len(marks), 2)}
-        return dict
-    except:
-        return {}
-
-
+#  getting pairs
 def get_schedule(cur_day):
     pairs = []
     iter = 0
@@ -135,6 +67,45 @@ def get_schedule(cur_day):
     return pairs
 
 
+#  variables
+cur_id = int
+period = str
+empty_marks = {
+    "Математика": [],
+    "Физика": [],
+    "Астрономия": [],
+    "Физкультура": [],
+    "Информатика": [],
+    "Английский Язык": [],
+    "Русский Язык": [],
+    "История": [],
+    "Обществознание": [],
+    "Биология": [],
+    "Литература": [],
+    "Обж": []
+}
+
+
+#  app config
+app = Flask(__name__)
+app.config.from_object(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nkedb.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.update(dict(DATABASE=os.path.join(app.root_path, 'nkedb.db')))
+app.config['SECRET_KEY'] = '3e301b1682e2833089377a8c440e19416ac7f6c9'
+app.permanent_session_lifetime = datetime.timedelta(days=7)
+
+
+# db config info
+DATABASE = '/csp/server/nkedb.db'
+db = SQLAlchemy(app)
+
+
+#  flask login
+login_manager = LoginManager(app)
+
+
+#  db description -----------------------------------------------------------------------------------------------------
 class UserTypes(db.Model):
     __tablename__ = 'UserTypes'
     RoleId = db.Column(db.Integer(), unique=True, primary_key=True)
@@ -257,25 +228,22 @@ class Library(db.Model):
 
     def __repr__(self):
         return f'{self.BookId}, {self.BookName}'
+#  end db description --------------------------------------------------------------------------------------------------
+#######################################################################################################################
 
 
-def filter_suppress_none(val):
-    if not val is None:
-        return val
-    else:
-        return ''
-
-
+#  load user, flask login
 @login_manager.user_loader
 def load_user(UserId):
     return Users.query.get(UserId)
 
 
+#  routs ---------------------------------------------------------------------------------------------------------------
 @app.route('/', methods=['POST', 'GET'])
 def Login():
     session.permanent = True
     global cur_id
-    if 'users_cookies' in session:
+    if 'users_cookies' in session and session['users_cookies'] == 1:
 
         cur_id = session['Users_id']
         return redirect(url_for('Main'), )
@@ -299,8 +267,9 @@ def Login():
                 try:
                     return redirect(next_page)
                 except:
-                    session['users_cookies'] = 1
-                    session['Users_id'] = cur_id
+                    if remember:
+                        session['users_cookies'] = 1
+                        session['Users_id'] = cur_id
                     return redirect(url_for('Main'), )
 
             if not check_password_hash(user.UserPassword, password):
@@ -313,7 +282,8 @@ def Login():
 @login_required
 def logout():
     try:
-        del session['Users_id']
+        session['users_cookies'] = 2
+        logout_user()
         return redirect(url_for('Login'))
     except:
         return redirect(url_for('Login'))
@@ -497,8 +467,11 @@ def Forgotpass():
 @app.errorhandler(404)
 def pageNotFound(error):
     return render_template('page404.html', title='Станица не найдена :(')
+#  end routs -----------------------------------------------------------------------------------------------------------
+#######################################################################################################################
 
 
+# after request decorator
 @app.after_request
 def redirect_to_signin(response):
     if response.status_code == 401:
@@ -506,5 +479,6 @@ def redirect_to_signin(response):
     return response
 
 
+#  main function
 if __name__ == '__main__':
     app.run(debug=True)

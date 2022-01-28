@@ -39,10 +39,10 @@
                 </nav>
 
                 <div class="login">
-                    <div class="login_img">
-                         <div class="login_list">
+                    <div class="login_img login_img-black" id="loginbtn">
+                         <div class="login_list" id="menu">
                              <div class="login_item"><a href="">Сменить пароль</a></div>
-                             <div class="login_item"><a href="">Выйти из аккаунта</a></div>
+                             <div class="login_item"><a href="/logout">Выйти из аккаунта</a></div>
                          </div>
                     </div>
                 </div>
@@ -101,6 +101,7 @@
             </div>
         </footer>
     </div>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 
 </html>
