@@ -9,62 +9,248 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>CSP project</title>
+    <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
+    <title>CSP</title>
 </head>
 
 <body>
     <div class="wrapper">
-
         <header class="header">
-            <div class="header_container container">
-                <a class="" href="/timetable">
-                    <div class="header_logo"></div>
-                </a>
-
-                <nav class="nav_menu menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="/timetable" class="item_link">Расписание</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/journal" class="item_link">Успеваемость</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/literature" class="item_link">Литература</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#" class="item_link">Учителя</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="login">
-                    <div class="login_img">
-                        <div class="login_list">
-                            <div class="login_item"><a href="">Сменить пароль</a></div>
-                            <div class="login_item"><a href="">Выйти из аккаунта</a></div>
-                        </div>
+            <div class="container">
+                <div class="header__block">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="" class="header__logo">
+                    </a>
+                    <div class="header__burger">
+                        <span></span>
                     </div>
+                    <div class="header__links">
+                        <a class="header__link" href="timetable.html">
+                            <div class="links__item">Расписание</div>
+                        </a>
+                        <a class="header__link" href="">
+                            <div class="links__item">Успеваемость</div>
+                        </a>
+                        <a class="header__link" href="literature.html">
+                            <div class="links__item">Литература</div>
+                        </a>
+                        <a class="header__link" href="teachers.html">
+                            <div class="links__item">Учителя</div>
+                        </a>
+                        <a class="header__link burger-profile__link" href="">
+                            <div class="links__item">Личный кабинет</div>
+                        </a>
+                    </div>
+                    <a class="profile__link" href="">
+                        <div class="header__profile">
+                            <div class="profile__img"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </header>
 
         <main class="main">
             <div class="container">
-                <div class="time">
-                    <p class="title">Расписание на неделю</p>
-                    <div class="timetable">
-                        <div class="timetable_list">
-                            <div class="timetable_block">
-                                <p class="subtitle"></p>
-                                <div class="normal_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">
-                                            <div class="timetable_item-name">Математика</div>
-                                            <div class="timetable_subtitle">Васечко В.Н.</div>
+                <div class="week-info__block">
+                    <p class="title week-info__title">Расписание на неделю</p>
+                    <div class="week-info">
+                        <div class="timetable-info">
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="timetable-teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
                                         </div>
-                                        <div class="timetable_class">-</div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="timetable-teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="timetable-teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -72,14 +258,20 @@
                     </div>
                 </div>
             </div>
-        </main>
+    </div>
+    </main>
 
-        <footer class="footer">
-            <div class="container">
-                <p class="footer_txt">Copyright by CSP @2021-2021</p>
-                <div class="footer_img"></div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__block">
+                <p class="footer__txt">Copyright by CSP @2021-2022</p>
+                <img src="img/newlogo.svg" alt="" class="company__logo">
             </div>
-        </footer>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/script.js"></script>
     </div>
 </body>
 

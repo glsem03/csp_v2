@@ -9,62 +9,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>CSP project</title>
+    <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
+    <title>CSP</title>
 </head>
 
 <body>
     <div class="wrapper">
-
         <header class="header">
-            <div class="header_container container">
-                <a class="" href="index.html">
-                    <div class="header_logo"></div>
-                </a>
-
-                <nav class="nav_menu menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="timetable.html" class="item_link">Расписание</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="grades.html" class="item_link">Успеваемость</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="literature.html" class="item_link">Литература</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="teachers.html" class="item_link">Учителя</a>
-                        </li>
-                    </ul>
-                </nav>
-
-
-                <div class="login">
-                    <div class="login_img">
-                         <div class="login_list">
-                             <div class="login_item"><a href="">Сменить пароль</a></div>
-                             <div class="login_item"><a href="">Выйти из аккаунта</a></div>
-                         </div>
+            <div class="container">
+                <div class="header__block">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="" class="header__logo">
+                    </a>
+                    <div class="header__burger">
+                        <span></span>
                     </div>
+                    <div class="header__links">
+                        <a class="header__link" href="timetable.html">
+                            <div class="links__item">Расписание</div>
+                        </a>
+                        <a class="header__link" href="">
+                            <div class="links__item">Успеваемость</div>
+                        </a>
+                        <a class="header__link" href="literature.html">
+                            <div class="links__item">Литература</div>
+                        </a>
+                        <a class="header__link" href="teachers.html">
+                            <div class="links__item">Учителя</div>
+                        </a>
+                        <a class="header__link burger-profile__link" href="">
+                            <div class="links__item">Личный кабинет</div>
+                        </a>
+                    </div>
+                    <a class="profile__link" href="">
+                        <div class="header__profile">
+                            <div class="profile__img"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </header>
 
         <main class="main">
             <div class="container">
-                <div class="teachers_block">
-                    <p class="title">Учителя</p>
-                    <div class="teachers">
-                        <div class="teacher_item">
-                            <div class="teacher_img">
-                                <div class="teachers_img"></div>
-                                <div class="teachers_name">-</div>
+                <div class="teachers">
+                    <p class="title teachers__title"></p>
+                    <div class="teachers__block">
+                        <div class="teacher__info">
+                            <div class="teacher__img__block">
+                                <img src="img/logo.png" alt="" class="teacher__img">
+                                <p class="teacher__name">Дейс Светлана Борисовна</p>
                             </div>
-                            <div class="teacher_inf">
-                                <p class="teachers_txt">-</p>
-                                <p class="teachers_txt">-</p>
-                                <a href="teacherstimetable.html">
-                                    <div class="teachers_timetable">Расписание преподавателя</div>
+                            <div class="teacher__contacts">
+                                <div class="contacts__item">Номер телефона: 8 913 380-23-65</div>
+                                <div class="contacts__item">Почта: deyssb@mail.ru</div>
+                                <a href="">
+                                    <div id="btn-hover" class="teacher__timetable-btn">Расписание учителя</div>
                                 </a>
                             </div>
                         </div>
@@ -75,10 +75,15 @@
 
         <footer class="footer">
             <div class="container">
-                <p class="footer_txt">Copyright by CSP @2021-2021</p>
-                <div class="footer_img"></div>
+                <div class="footer__block">
+                    <p class="footer__txt">Copyright by CSP @2021-2022</p>
+                    <img src="img/newlogo.svg" alt="" class="company__logo">
+                </div>
             </div>
         </footer>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../js/script.js"></script>
     </div>
 </body>
 

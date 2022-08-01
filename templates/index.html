@@ -9,114 +9,216 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?169"></script>
-    <title>CSP project</title>
+    <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
+    <title>CSP</title>
 </head>
 
 <body>
     <div class="wrapper">
-
         <header class="header">
-            <div class="header_container container">
-                <a class="" href="index.html">
-                    <div class="header_logo"></div>
-                </a>
-
-                <nav class="nav_menu menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="timetable.html" class="item_link">Расписание</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/journal" class="item_link">Успеваемость</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="/literature" class="item_link">Литература</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="teachers.html" class="item_link">Учителя</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="login">
-                    <div class="login_img">
-                         <div class="login_list">
-                             <div class="login_item"><a href="">Сменить пароль</a></div>
-                             <div class="login_item"><a href="">Выйти из аккаунта</a></div>
-                         </div>
+            <div class="container">
+                <div class="header__block">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="" class="header__logo">
+                    </a>
+                    <div class="header__burger">
+                        <span></span>
                     </div>
+                    <div class="header__links">
+                        <a class="header__link" href="timetable.html">
+                            <div class="links__item">Расписание</div>
+                        </a>
+                        <a class="header__link" href="grades.html">
+                            <div class="links__item">Успеваемость</div>
+                        </a>
+                        <a class="header__link" href="literature.html">
+                            <div class="links__item">Литература</div>
+                        </a>
+                        <a class="header__link" href="teachers.html">
+                            <div class="links__item">Учителя</div>
+                        </a>
+                        <a class="header__link burger-profile__link" href="">
+                            <div class="links__item">Личный кабинет</div>
+                        </a>
+                    </div>
+                    <a class="profile__link" href="">
+                        <div class="header__profile">
+                            <div class="profile__img"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </header>
 
         <main class="main">
             <div class="container">
-                <div class="news">
-                    <div class="last_news">
-                        <p class="title">Последние интересные события</p>
-                        <div class="last_news_block">
-                            <div class="last_news_img"></div>
-                            <div class="last_news_txt">С 13 по 16 декабря сразу в трех центрах проведения
-                                демонстрационного экзамена, аккредитованных по стандарту Ворлдскиллс Россия, созданных
-                                на базе колледжа, состоялся демонстрационный экзамен.</div>
+                <div class="news__block">
+                    <div class="last-news__block">
+                        <p class="title last-news__title">Последние интересные новости</p>
+                        <div class="last-news">
+
+                            <input type="radio" name="r" id="r1">
+                            <input type="radio" name="r" id="r2">
+                            <input type="radio" name="r" id="r3">
+                            <input type="radio" name="r" id="r4">
+
+                            <div class="last-new s1">
+                                <div class="last-new__img-block">
+                                    <img src="img/news_img.jpg" alt="" class="last-news__img">
+                                </div>
+                                <p class="last-news__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+                                    expedita
+                                    quam magnam, officia sapiente quasi quas natus. Lorem ipsum dolor sit amet
+                                    consectetur,
+                                    adipisicing elit. Quae nesciunt non eius sint iste harum libero cumque totam
+                                    aliquid! Et
+                                    accusamus recusandae provident commodi eius libero voluptatem ipsam iure velit!</p>
+                            </div>
+                            <div class="last-new">
+                                <div class="last-new__img-block">
+                                    <img src="img/news_img.jpg" alt="" class="last-news__img">
+                                </div>
+                                <p class="last-news__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+                                    expedita
+                                    quam magnam, officia sapiente quasi quas natus. Lorem ipsum dolor sit amet
+                                    consectetur,
+                                    adipisicing elit. Quae nesciunt non eius sint iste harum libero cumque totam
+                                    aliquid! Et
+                                    accusamus recusandae provident commodi eius libero voluptatem ipsam iure velit!</p>
+                            </div>
+                            <div class="last-new">
+                                <div class="last-new__img-block">
+                                    <img src="img/news_img.jpg" alt="" class="last-news__img">
+                                </div>
+                                <p class="last-news__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+                                    expedita
+                                    quam magnam, officia sapiente quasi quas natus. Lorem ipsum dolor sit amet
+                                    consectetur,
+                                    adipisicing elit. Quae nesciunt non eius sint iste harum libero cumque totam
+                                    aliquid! Et
+                                    accusamus recusandae provident commodi eius libero voluptatem ipsam iure velit!</p>
+                            </div>
+                            <div class="last-new">
+                                <div class="last-new__img-block">
+                                    <img src="img/news_img.jpg" alt="" class="last-news__img">
+                                </div>
+                                <p class="last-news__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+                                    expedita
+                                    quam magnam, officia sapiente quasi quas natus. Lorem ipsum dolor sit amet
+                                    consectetur,
+                                    adipisicing elit. Quae nesciunt non eius sint iste harum libero cumque totam
+                                    aliquid! Et
+                                    accusamus recusandae provident commodi eius libero voluptatem ipsam iure velit!</p>
+                            </div>
+
                         </div>
+                        <div class="slide-navigation">
+                            <label id="slide-1" class="slide-navigation__bar" for="r1"></label>
+                            <label id="slide-2" class="slide-navigation__bar" for="r2"></label>
+                            <label id="slide-3" class="slide-navigation__bar" for="r3"></label>
+                            <label id="slide-4" class="slide-navigation__bar" for="r4"></label>
+                        </div>
+
                     </div>
-                    <div class="vk_news">
-                        <p class="title">Узнайте больше в группе ВК</p>
-                        <div class="vk_news_block">
+                    <div class="vk-news__block">
+                        <p class="title vk-news__title">Узнайте больше в группе ВК</p>
+                        <div class="vk-news">
                             <div id="vk_groups"></div>
                             <script type="text/javascript">
-                            VK.Widgets.Group("vk_groups", {mode: 4, width: "auto", height: "550", color3: '000000'}, 8414632);
+                                VK.Widgets.Group("vk_groups", { mode: 4, wide: 1, width: "auto", height: 456, color1: "111", color2: "fff", color3: "5181B8" }, 8414632);
                             </script>
                         </div>
                     </div>
                 </div>
-                <div class="short_inf">
-                    <p class="title">Сводные данные недели</p>
-                    <div class="short_inf_block">
-                        <div class="inf_block">
-                            <p class="subtitle">Ваши оценки за неделю</p>
-                            <div class="short_grades">
-                                <div class="item-grades_line">
-                                    <div class="short_item-grades">Предметы</div>
-                                    <div class="short_item-grades">Оценки</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inf_block">
-                            <p class="subtitle">Расписание на {{ period }}</p>
-                            <div class="short_timetable_block">
-                                <p class="subtitle"></p>
-                                <div class="short_timetable">
-                                    <div class="timetable_line">
-                                        <div class="timetable_date">-</div>
-                                        <div class="timetable_item">
-                                            <div class="timetable_item-name">Математика</div>
-                                            <div class="timetable_subtitle">Васечко В.Н.</div>
+                <div class="week-info__block">
+                    <p class="title week-info__title">Краткое расписание</p>
+                    <div class="week-info">
+                        <div class="timetable-info">
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
                                         </div>
-                                        <div class="timetable_class">-</div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="timetable__item">
+                                <p class="timetable__date">Cегодня 20.12.2021, понедельник </p>
+                                <div class="timetable">
+                                    <div class="timetable__line">
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                        <div class="timetable__time">8:30 9:55</div>
+                                    </div>
+                                    <div class="timetable__line">
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                        <div class="timetable__subject">
+                                            <div class="timetable__names">
+                                                <p class="subject__name">Математика</p>
+                                                <p class="teacher__name">Васечко В.Н.</p>
+                                            </div>
+                                            <p class="classroom__number">308</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
-        </main>
-
-        <footer class="footer">
-            <div class="container">
-                <p class="footer_txt">Copyright by CSP @2021-2021</p>
-                <div class="footer_img"></div>
-            </div>
-        </footer>
     </div>
-    <script type="text/javascript">
-        VK.Widgets.Group("vk_groups", {mode: 4, height: "400"}, 8414632);
-    </script>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__block">
+                <p class="footer__txt">Copyright by CSP @2021-2022</p>
+                <img src="img/newlogo.svg" alt="" class="company__logo">
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/script.js"></script>
+    </div>
 </body>
 
 </html>

@@ -8,62 +8,91 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../templates/css/style.css">
-    <title>CSP project</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
+    <title>CSP</title>
 </head>
 
 <body>
     <div class="wrapper">
-
         <header class="header">
-            <div class="header_container container">
-                <a class="" href="/literature">
-                    <div class="header_logo"></div>
-                </a>
-
-                <nav class="nav_menu menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="timetable.html" class="item_link">Расписание</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="grades.html" class="item_link">Успеваемость</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="literature.html" class="item_link">Литература</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="teachers.html" class="item_link">Учителя</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="login">
-                    <div class="login_img login_img-black" id="loginbtn">
-                         <div class="login_list" id="menu">
-                             <div class="login_item"><a href="">Сменить пароль</a></div>
-                             <div class="login_item"><a href="">Выйти из аккаунта</a></div>
-                         </div>
+            <div class="container">
+                <div class="header__block">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="" class="header__logo">
+                    </a>
+                    <div class="header__burger">
+                        <span></span>
                     </div>
+                    <div class="header__links">
+                        <a class="header__link" href="timetable.html">
+                            <div class="links__item">Расписание</div>
+                        </a>
+                        <a class="header__link" href="">
+                            <div class="links__item">Успеваемость</div>
+                        </a>
+                        <a class="header__link" href="literature.html">
+                            <div class="links__item">Литература</div>
+                        </a>
+                        <a class="header__link" href="teachers.html">
+                            <div class="links__item">Учителя</div>
+                        </a>
+                        <a class="header__link burger-profile__link" href="">
+                            <div class="links__item">Личный кабинет</div>
+                        </a>
+                    </div>
+                    <a class="profile__link" href="">
+                        <div class="header__profile">
+                            <div class="profile__img"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </header>
 
         <main class="main">
             <div class="container">
-                <div class="literature_block">
-                    <p class="title">Литература</p>
-                    <div class="search_field">
-                        <input class="search" type="text" placeholder="Введите название">
-                        <a href="#">
-                            <div class="search_btn"></div>
-                        </a>
+                <div class="literature">
+                    <p class="title literature__title">Литература</p>
+                    <div class="search__block">
+                        <input class="search__field" type="text" placeholder="Поиск по литературе">
+                        <button class="search-btn">
+                            <img class="search-btn__img" src="img/3844432-magnifier-search-zoom_110300.png" alt="">
+                        </button>
                     </div>
-                    <div class="literature_list">
-                        <div class="literature_item">
-                            <div class="lit_img"></div>
-                            <p class="lit_name">-</p>
-                        </div>
+                    <div class="literature__list">
+                        <a href="">
+                            <div class="literature__item">
+                                <div class="literature__img__block">
+                                    <img class="literature__img" src="img/image4.png" alt="">
+                                </div>
+                                <p class="literature__txt">Математика 11 класс</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="literature__item">
+                                <div class="literature__img__block">
+                                    <img class="literature__img" src="img/image4.png" alt="">
+                                </div>
+                                <p class="literature__txt">Математика 11 класс</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="literature__item">
+                                <div class="literature__img__block">
+                                    <img class="literature__img" src="img/image4.png" alt="">
+                                </div>
+                                <p class="literature__txt">Математика 11 класс</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="literature__item">
+                                <div class="literature__img__block">
+                                    <img class="literature__img" src="img/image4.png" alt="">
+                                </div>
+                                <p class="literature__txt">Математика 11 класс</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -71,12 +100,16 @@
 
         <footer class="footer">
             <div class="container">
-                <p class="footer_txt">Copyright by CSP @2021-2021</p>
-                <div class="footer_img"></div>
+                <div class="footer__block">
+                    <p class="footer__txt">Copyright by CSP @2021-2022</p>
+                    <img src="img/newlogo.svg" alt="" class="company__logo">
+                </div>
             </div>
         </footer>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../js/script.js"></script>
     </div>
-    <script src="index.js"></script>
 </body>
 
 </html>
