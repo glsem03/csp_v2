@@ -23,6 +23,9 @@ from flask_login import LoginManager, logout_user, login_user, login_required
 #  security
 from werkzeug.security import generate_password_hash, check_password_hash
 
+#  admin
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 #  translate function
 def ru(i):
@@ -230,6 +233,21 @@ class Library(db.Model):
         return f'{self.BookId}, {self.BookName}'
 #  end db description --------------------------------------------------------------------------------------------------
 #######################################################################################################################
+
+###ADMIN###
+admin = Admin(app)
+admin.add_view(ModelView(UserTypes, db.session))
+admin.add_view(ModelView(Users, db.session))
+admin.add_view(ModelView(Groups, db.session))
+admin.add_view(ModelView(GroupsToUsers, db.session))
+admin.add_view(ModelView(HomeWorkList, db.session))
+admin.add_view(ModelView(Lessons, db.session))
+admin.add_view(ModelView(MarksList, db.session))
+admin.add_view(ModelView(MissedLessons, db.session))
+admin.add_view(ModelView(MissedLessonsReason, db.session))
+admin.add_view(ModelView(ScheduleList, db.session))
+admin.add_view(ModelView(Offices, db.session))
+admin.add_view(ModelView(Library, db.session))
 
 
 #  load user, flask login
@@ -463,6 +481,13 @@ def literaturef():
 def Forgotpass():
     return render_template('forgotpass.html')
 
+
+@app.route('/admin')
+def Admin():
+    if Users.query.filter_by(Id=cur_id).first().UserTypeId != 4:
+        return redirect(url_for('Login'))
+    else:
+        return redirect(url_for('admin'), )
 
 @app.errorhandler(404)
 def pageNotFound(error):
