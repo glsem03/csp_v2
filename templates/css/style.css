@@ -41,6 +41,12 @@ button {
     background: none;
 }
 
+.textarea {
+    resize: none;
+    outline: none;
+    font-family: inherit;
+}
+
 #btn-hover {
     transition: background-color 0.5s;
     cursor: pointer;
@@ -901,3 +907,288 @@ input[name="r"] {
 }
 
 /*--- END LOGIN ---*/
+
+
+
+/*--- PROFILE ---*/
+
+.profile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-news {
+    max-width: 590px;
+    min-width: 590px;
+}
+
+
+.add-news__txt {
+    width: 100%;
+    height: max-content;
+    min-height: 120px;
+    background: white;
+    border-radius: 15px;
+    margin: 20px 0 0 0;
+    padding: 15px;
+}
+
+.add-news__textarea {
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    color: #555555;
+}
+
+.add-news__btn-block {
+    margin: 20px auto 0 auto;
+    width: max-content;
+}
+
+.add-news__btn {
+    width: 260px;
+    height: 55px;
+    text-align: center;
+    border-radius: 15px;
+    background: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.5s ease;
+}
+
+.add-news__btn:hover {
+    background: black;
+    color: white;
+    border: 2px solid white;
+}
+
+.profile__info {
+    display: flex;
+    max-width: 590px;
+    min-width: 590px;
+    justify-content: space-between;
+}
+
+.profile__changes {
+    width: 190px;
+}
+
+.profile__avatar {
+    padding: 5px;
+    background: white;
+    width: 100%;
+    height: 255px;
+    border-radius: 15px;
+    margin: 0 0 15px 0;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.avatar__input {
+    display: none;
+}
+
+.change__btn {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 15px;
+    background: white;
+}
+
+.change__btn:not(:last-child) {
+    margin: 0 0 15px 0;
+}
+
+.change-pass__btn {
+    width: 100%;
+    height: 40px;
+    color: white;
+    border: 2px solid white;
+    text-align: center;
+    font-size: 16px;
+    margin: 15px 0 0 0;
+    border-radius: 15px;
+}
+
+.student__info {
+    width: 375px;
+}
+
+.info-input__field {
+    background: white;
+    border-radius: 15px;
+    color: #555555;
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+}
+
+.info-input__field:not(:last-child) {
+    margin: 0 0 15px 0;
+}
+
+.info__input {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+}
+
+@media (max-width: 1230px) {
+    .profile {
+        display: block;
+    }
+
+    .add-news {
+        margin: 0 auto;
+        min-width: auto;
+    }
+
+    .profile__info {
+        margin: 50px auto 0 auto;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 620px) {
+    .profile__info {
+        display: block;
+    }
+
+    .profile__changes {
+        margin: 0 auto;
+    }
+
+    .student__info {
+        margin: 50px 0 0 0;
+        width: 100%;
+    }
+}
+
+/*--- END PROFILE ---*/
+
+
+
+/*--- БЛОК С ДОБАВЛЕНИЕМ КАРТИНОК ---*/
+
+.card {
+    width: 100%;
+    min-height: 360px;
+    max-height: max-content;
+    background: white;
+    border-radius: 15px;
+    margin: 0 15px 0 0;
+    padding: 15px;
+}
+
+.btn {
+    color: black;
+    position: relative;
+    border-radius: 99px;
+    border: 2px solid black;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0.5rem 1.5rem;
+    font-weight: 700;
+    outline: none;
+    background: #fff;
+    transition: all 0.22s;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+
+.btn:active {
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+input[id=file] {
+    display: none;
+}
+
+.preview {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    margin: 15px 0 0 0;
+}
+
+.preview-image {
+    margin: 0 5px 5px 0;
+    position: relative;
+    height: max-content;
+    overflow: hidden;
+}
+
+.preview-image.removing {
+    transform: scale(0);
+    transition: transform .3s;
+}
+
+.preview-image:hover .preview-remove {
+    opacity: 1;
+}
+
+.preview-image:hover .preview-info {
+    bottom: 0;
+}
+
+.preview-image img {
+    width: 180px;
+    height: auto;
+}
+
+.preview-remove {
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: bold;
+    background: rgb(255, 255, 255, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity .3s;
+}
+
+.preview-info {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: -30px;
+    height: 24px;
+    font-size: .8rem;
+    background: rgb(255, 255, 255, .5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    transition: bottom .3s;
+}
+
+.preview-info-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #297fffa8;
+    text-align: center;
+    transition: width .3s;
+}
+
+
+/*--- КОНЕЦ БЛОК С ДОБАВЛЕНИЕМ КАРТИНОК ---*/

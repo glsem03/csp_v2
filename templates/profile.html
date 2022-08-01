@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
+    <title>CSP</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="container">
+                <div class="header__block">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="" class="header__logo">
+                    </a>
+                    <div class="header__burger">
+                        <span></span>
+                    </div>
+                    <div class="header__links">
+                        <a class="header__link" href="timetable.html">
+                            <div class="links__item">Расписание</div>
+                        </a>
+                        <a class="header__link" href="grades.html">
+                            <div class="links__item">Успеваемость</div>
+                        </a>
+                        <a class="header__link" href="literature.html">
+                            <div class="links__item">Литература</div>
+                        </a>
+                        <a class="header__link" href="teachers.html">
+                            <div class="links__item">Учителя</div>
+                        </a>
+                        <a class="header__link burger-profile__link" href="">
+                            <div class="links__item">Личный кабинет</div>
+                        </a>
+                    </div>
+                    <a class="profile__link" href="profile.html">
+                        <div class="header__profile">
+                            <div class="profile__img"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <div class="profile">
+
+                    <div class="add-news">
+                        <div class="card">
+                            <input type="file" id="file">
+                        </div>
+                        <div class="add-news__txt">
+                            <textarea placeholder="Введите текст новости"
+                                class="textarea add-news__textarea"></textarea>
+                        </div>
+                        <div class="add-news__btn-block">
+                            <button type="submit" class="add-news__btn">Выложить новость</button>
+                        </div>
+                    </div>
+
+                    <div class="profile__info">
+                        <form action="">
+                            <div class="profile__changes">
+                                <div class="profile__avatar">
+                                    <img class="avatar-img" id="avatar-result"
+                                        src="https://img2.freepng.ru/20180428/sae/kisspng-computer-icons-user-profile-clip-art-5ae4d6d8428775.5261167915249466482725.jpg"
+                                        alt="">
+                                </div>
+                                <button id="avatar__btn" class="change__btn">Сменить аватар</button>
+                                <input class="avatar__input" type="file" name="" id="avatar">
+                                <a href="changepass.html">
+                                    <button class="change__btn">Сменить пароль</button>
+                                </a>
+                                <button type="submit" id="btn-hover" class="change-pass__btn">Сохранить данные</button>
+                            </div>
+                        </form>
+                        <div class="student__info">
+                            <div class="info-input__field">
+                                <input placeholder="Имя:" type="text" class="info__input">
+                            </div>
+                            <div class="info-input__field">
+                                <input placeholder="Фамилия:" type="text" class="info__input">
+                            </div>
+                            <div class="info-input__field">
+                                <input placeholder="Группа:" type="text" class="info__input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__block">
+                    <p class="footer__txt">Copyright by CSP @2021-2022</p>
+                    <img src="img/newlogo.svg" alt="" class="company__logo">
+                </div>
+            </div>
+        </footer>
+
+        <script type="module" src="../js/app.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../js/script.js"></script>
+    </div>
+</body>
+
+</html>
