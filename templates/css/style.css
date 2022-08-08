@@ -378,14 +378,12 @@ body.lock {
 }
 
 .last-news {
-    width: 400%;
     height: max-content;
     border-radius: 17px;
-    display: flex;
 }
 
 .last-new {
-    width: 25%;
+    max-width: 810px;
     transition: all 0.6s ease;
 }
 

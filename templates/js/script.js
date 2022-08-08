@@ -35,4 +35,25 @@ $(document).ready(function () {
     };
 
 
+
+});
+
+$('.last-news').slick({
+    slideToShow: 1,
+    Infinity: true,
+    dots: true,
+    autoplay: true,
+    autoplaySpeed: 10000,
+    speed: 1000,
+    prevArrow: false,
+    nextArrow: false,
+    responsive: [
+        {
+            breakpoint: 1000,
+            settings: {
+                prevArrow: false,
+                nextArrow: false,
+            }
+        }
+    ]
 });
