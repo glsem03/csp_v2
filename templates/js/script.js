@@ -16,6 +16,7 @@ $(document).ready(function () {
 
     $('#avatar__btn').click(function () {
         $('#avatar').click();
+
     });
 
 
